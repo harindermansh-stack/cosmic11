@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cosmic 11 — Ancient Wisdom. Modern AI.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDF6E9;
+    --panel: #FFFFFF;
+    --ink: #2B1A12;
+    --ink-soft: #6B5344;
+    --saffron: #FF9933;
+    --saffron-deep: #D97A1F;
+    --maroon: #7A1F1F;
+    --maroon-deep: #5C1414;
+    --gold: #C9A227;
+    --line: rgba(43,26,18,0.14);
+    --chip-bg: rgba(255,153,51,0.12);
+    --focus-ring: #1F6FEB;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1A0F0A;
+      --panel: #241510;
+      --ink: #F3E6D0;
+      --ink-soft: #C9B49B;
+      --saffron: #FFB35C;
+      --saffron-deep: #FF9933;
+      --maroon: #E2564F;
+      --maroon-deep: #C23B34;
+      --gold: #E0BE5A;
+      --line: rgba(243,230,208,0.16);
+      --chip-bg: rgba(255,179,92,0.14);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1A0F0A;
+    --panel: #241510;
+    --ink: #F3E6D0;
+    --ink-soft: #C9B49B;
+    --saffron: #FFB35C;
+    --saffron-deep: #FF9933;
+    --maroon: #E2564F;
+    --maroon-deep: #C23B34;
+    --gold: #E0BE5A;
+    --line: rgba(243,230,208,0.16);
+    --chip-bg: rgba(255,179,92,0.14);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Mukta', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 28px 20px 40px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 50% -10%, var(--chip-bg), transparent 60%),
+      var(--bg);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-conic-gradient(from 0deg, var(--gold) 0deg 1deg, transparent 1deg 30deg);
+    opacity: 0.06;
+    mask-image: radial-gradient(circle at 50% 0%, black, transparent 65%);
+    pointer-events: none;
+  }
+  /* ---------- Deep-space hero ---------- */
+  .hero {
+    background:
+      radial-gradient(60% 46% at 50% 34%, rgba(255,140,50,0.30), transparent 70%),
+      radial-gradient(42% 36% at 14% 18%, rgba(96,64,210,0.30), transparent 70%),
+      radial-gradient(46% 40% at 90% 72%, rgba(200,40,64,0.24), transparent 72%),
+      linear-gradient(180deg, #04040d 0%, #0a0616 55%, #140913 100%);
+    isolation: isolate;
+    border-bottom: 1px solid rgba(201,162,39,0.55);
+  }
+  .hero::before { display: none; }
+  .hero::after {
+    content: ""; position: absolute; left: -25%; right: -25%; top: 20%; height: 40%; z-index: 0;
+    background: linear-gradient(100deg, transparent 0%, rgba(255,232,196,0.09) 32%, rgba(255,214,168,0.17) 50%, rgba(255,232,196,0.08) 68%, transparent 100%);
+    transform: rotate(-14deg); filter: blur(22px); pointer-events: none;
+  }
+  .space-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  .orbit-wrap { width: min(94vw, 400px); margin: 0 auto 6px; position: relative; z-index: 2; }
+  .orbit-svg { width: 100%; height: auto; display: block; }
+  .orbit-ring { fill: none; stroke: #F5D48A; stroke-opacity: 0.30; stroke-width: 0.7; }
+  .sun-glow { fill: #FF9933; }
+  .hero .wordmark { color: #FFE4B5; text-shadow: 0 0 26px rgba(255,153,51,0.55), 0 2px 0 rgba(0,0,0,0.35); z-index: 2; }
+  .hero .tagline { color: #E8D5B7; z-index: 2; }
+  .wordmark {
+    font-family: 'Yatra One', cursive;
+    font-size: clamp(2.1rem, 7vw, 3.2rem);
+    color: var(--maroon-deep);
+    margin: 0;
+    position: relative;
+  }
+  .tagline {
+    margin: 10px 0 0;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    position: relative;
+  }
+
+  /* ---------- Section shell ---------- */
+  section.block { padding: 40px 0 0; }
+  h2.block-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--maroon-deep);
+  }
+  p.block-sub {
+    margin: 0 0 20px;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    max-width: 62ch;
+  }
+
+
+  /* ---------- Redesign: Airbnb-style hero + floating card, Pinterest-style board ---------- */
+  .hero { text-align: left; padding: 22px 20px 96px; border-radius: 0 0 32px 32px; border-bottom: 0; }
+  .hero-top { position: relative; z-index: 3; display: flex; align-items: center; max-width: 1040px; margin: 0 auto; }
+  .hero-top .wordmark { font-size: 1.45rem; margin: 0; }
+  .hero-inner { position: relative; z-index: 3; display: grid; gap: 6px; max-width: 1040px; margin: 0 auto; align-items: center; }
+  .hero .orbit-wrap { width: min(78vw, 330px); margin: 4px auto 0; }
+  .hero-copy { text-align: center; }
+  .hero h1 { font-family: 'Yatra One', cursive; font-weight: 400; color: #FFF1D6; font-size: clamp(2rem, 8.4vw, 3.5rem); line-height: 1.15; margin: 14px 0 14px; text-shadow: 0 2px 22px rgba(0,0,0,0.45); }
+  .hero .hero-sub { color: #EBD9BC; font-size: 1.08rem; line-height: 1.5; margin: 0 auto 16px; max-width: 34em; }
+  .trust-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0; padding: 0; list-style: none; }
+  .trust-row li { background: rgba(255,241,214,0.12); border: 1px solid rgba(255,214,150,0.38); color: #FFE9C4; padding: 7px 13px; border-radius: 99px; font-size: 0.9rem; font-weight: 600; }
+  @media (min-width: 880px) {
+    .hero { padding: 26px 32px 130px; }
+    .hero-inner { grid-template-columns: 1.1fr 0.9fr; gap: 32px; }
+    .hero-copy { text-align: left; order: 1; }
+    .hero .hero-sub { margin-left: 0; }
+    .trust-row { justify-content: flex-start; }
+    .hero .orbit-wrap { order: 2; width: min(100%, 420px); margin: 0 auto; }
+    .hero h1 { font-size: 3.5rem; }
+  }
+  #profile.block { padding-top: 0; }
+  #profile > .card.form-card { margin-top: -74px; position: relative; z-index: 5; border-radius: 24px; padding: 24px 22px; border: 1px solid rgba(201,162,39,0.35); box-shadow: 0 18px 50px rgba(92,20,20,0.20), 0 2px 8px rgba(92,20,20,0.08); background: var(--panel); }
+  .form-card .block-title { font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; }
+  .form-card .block-sub { margin-bottom: 18px; }
+  .form-card .cta { border-radius: 99px; }
+  @media (min-width: 880px) { .wrap { max-width: 860px; } }
+  /* the board */
+  .board-title { margin-top: 8px; }
+  .board { column-count: 2; column-gap: 14px; margin-top: 4px; }
+  @media (min-width: 700px) { .board { column-count: 3; } }
+  .tile { break-inside: avoid; margin: 0 0 14px; border-radius: 22px; padding: 18px 16px 16px; color: #3a1410; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 16px rgba(92,20,20,0.10); }
+  .tile h3 { margin: 0; font-size: 1.08rem; line-height: 1.25; color: #4a1010; }
+  .tile p { margin: 0; font-size: 0.93rem; line-height: 1.45; color: #5a3a2c; }
+  .tile svg { width: 100%; height: auto; display: block; }
+  .tile.t-rashi { background: linear-gradient(160deg, #FFD9A0, #FFB86B); min-height: 250px; }
+  .tile.t-score { background: linear-gradient(160deg, #FFF3D6, #FFE08F); }
+  .tile.t-day { background: linear-gradient(170deg, #2A1650, #4A2A7A); color: #fff; min-height: 230px; }
+  .tile.t-day h3, .tile.t-day p { color: #FFF1D6; }
+  .tile.t-kundli { background: linear-gradient(160deg, #FFE9E0, #FFC8B8); }
+  .tile.t-books { background: linear-gradient(160deg, #F6E7C8, #E7C98A); min-height: 215px; }
+  .tile.t-report { background: linear-gradient(160deg, #FFF8EA, #FFE9C4); border: 1px solid rgba(201,162,39,0.4); }
+  .board-note { text-align: center; margin: 4px 0 0; }
+
+  /* ---------- Birth details panel ---------- */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0.01em;
+  }
+  .field input {
+    font-family: inherit;
+    font-size: 0.98rem;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .field input:focus-visible, button:focus-visible, .chip:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  .field input[readonly] { color: var(--ink); opacity: 0.85; }
+  .verified-note {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .verified-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #3A8F5A; flex: none;
+  }
+
+  /* ---------- Kundli grid ---------- */
+  .kundli-wrap { margin-top: 18px; }
+  .kundli-wrap svg { width: 100%; height: auto; display: block; }
+  .kundli-line { stroke: var(--maroon-deep); stroke-width: 1.6; fill: none; }
+  .kundli-outer { stroke: var(--maroon-deep); stroke-width: 2.2; fill: var(--panel); }
+  .kundli-border-outer { stroke: var(--gold); stroke-width: 1.4; fill: none; }
+  .kundli-petal { fill: var(--panel); stroke: var(--maroon-deep); stroke-width: 1.6; }
+  .kundli-sign { font-size: 9px; fill: var(--ink-soft); font-weight: 600; }
+  .kundli-num { font-size: 8px; fill: var(--gold); font-weight: 700; }
+  .kundli-planets { font-size: 11px; fill: var(--ink); font-weight: 700; }
+  .kundli-asc-cell { fill: var(--chip-bg); }
+  .kundli-asc-label { font-size: 8px; fill: var(--maroon-deep); font-weight: 700; }
+  .kundli-legend { margin-top: 10px; font-size: 0.78rem; color: var(--ink-soft); text-align: center; }
+
+  /* ---------- Cosmic profile ---------- */
+  [hidden] { display: none !important; }
+  .card + .card { margin-top: 16px; }
+  .field input { font-size: 16px; min-height: 44px; }
+  .form-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+  .form-actions .cta { margin-top: 0; flex: 1 1 220px; width: auto; }
+  .form-msg { color: #B3261E; font-size: 0.88rem; margin: 12px 0 0; min-height: 1.2em; }
+  details.coords { margin-top: 14px; font-size: 0.9rem; color: var(--ink-soft); }
+  details.coords summary { cursor: pointer; padding: 6px 0; }
+  .fine { font-size: 0.78rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .greet { font-size: 1.15rem; font-weight: 700; color: var(--maroon-deep); margin: 0 0 14px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat { background: var(--chip-bg); border-radius: 12px; padding: 12px 8px; text-align: center; min-width: 0; }
+  .stat .k { font-size: 0.7rem; color: var(--ink-soft); font-weight: 600; }
+  .stat .v { font-size: 1.02rem; font-weight: 700; color: var(--maroon-deep); margin-top: 2px; overflow-wrap: break-word; }
+  .stat .s { font-size: 0.72rem; color: var(--ink-soft); margin-top: 2px; }
+  .dasha-line { margin: 14px 0 0; font-size: 0.9rem; color: var(--ink-soft); }
+  .card-title { font-size: 1.05rem; font-weight: 700; color: var(--maroon-deep); margin: 0 0 4px; }
+  .score-top { display: flex; gap: 16px; align-items: center; }
+  .ring { width: 118px; height: 118px; flex: none; }
+  .ring .track { fill: none; stroke: var(--line); stroke-width: 10; }
+  .ring .prog { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.2s cubic-bezier(.2,.7,.2,1); }
+  .ring text.n { font-size: 30px; font-weight: 700; fill: var(--maroon-deep); text-anchor: middle; }
+  .ring text.d { font-size: 9px; fill: var(--ink-soft); text-anchor: middle; }
+  .band { font-weight: 700; color: var(--saffron-deep); font-size: 1.05rem; }
+  .score-copy p { margin: 4px 0 0; font-size: 0.92rem; color: var(--ink-soft); }
+  .pl-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .pl-row { display: grid; grid-template-columns: 1fr 34px; column-gap: 10px; align-items: end; }
+  .pl-name { font-weight: 700; font-size: 0.92rem; }
+  .pl-meta { font-size: 0.74rem; color: var(--ink-soft); }
+  .bar { height: 7px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 5px; grid-column: 1 / -1; }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--saffron), var(--maroon)); width: 0; transition: width 1s ease; }
+  .pl-pts { font-weight: 700; font-size: 0.88rem; text-align: right; }
+  .flag { display: inline-block; font-size: 0.64rem; font-weight: 700; padding: 1px 6px; border-radius: 99px; background: var(--chip-bg); color: var(--maroon-deep); margin-left: 4px; }
+  .daily-head { display: flex; gap: 14px; align-items: center; }
+  .daily-head .ring { width: 92px; height: 92px; }
+  .date-line { font-size: 0.8rem; color: var(--ink-soft); }
+  .headline { font-weight: 700; margin: 2px 0 0; }
+  .focus { margin: 12px 0 0; font-size: 0.95rem; }
+  .chips-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .pill { font-size: 0.78rem; font-weight: 600; padding: 6px 11px; border-radius: 99px; border: 1px solid var(--line); }
+  .pill.good { background: rgba(58,143,90,0.12); color: #21663C; border-color: rgba(58,143,90,0.35); }
+  .pill.care { background: rgba(217,122,31,0.12); color: #9A4A00; border-color: rgba(217,122,31,0.35); }
+  .lines p { margin: 10px 0 0; font-size: 0.9rem; }
+  .lines b { color: var(--maroon-deep); }
+  .engine-note { margin: 16px 2px 0; font-size: 0.76rem; color: var(--ink-soft); }
+  details.how { margin-top: 14px; font-size: 0.86rem; color: var(--ink-soft); }
+  details.how summary { cursor: pointer; font-weight: 600; color: var(--maroon-deep); }
+  @media (prefers-color-scheme: dark) {
+    .pill.good { color: #7FD6A0; }
+    .pill.care { color: #FFB877; }
+    .form-msg { color: #FF8A80; }
+  }
+  @media (max-width: 380px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .score-top { flex-direction: column; text-align: center; }
+  }
+
+  /* ---------- Language toggle, topics, answers ---------- */
+  .lang-btn { position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); right: 12px; z-index: 50; font: 600 14px/1 inherit; padding: 9px 14px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.35); background: rgba(20,10,30,0.55); color: #fff; backdrop-filter: blur(6px); cursor: pointer; min-height: 40px; }
+  .topic-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 6px 0 4px; }
+  .topic { font: inherit; font-weight: 600; font-size: 0.92rem; padding: 14px 8px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); color: var(--maroon-deep); cursor: pointer; min-height: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .topic:disabled, #askBtn:disabled { opacity: 0.55; cursor: wait; }
+  #ownQ { border: 2px solid var(--gold); border-radius: 14px; background: rgba(255,179,92,0.22); padding: 12px 14px; margin-top: 12px; }
+  #ownQ > summary { font-weight: 800; font-size: 1.08rem; color: var(--maroon-deep); cursor: pointer; }
+  #ownQ > summary::before { content: "\270D\FE0F  "; }
+  .patience { font-weight: 700; color: var(--maroon-deep); background: rgba(201,162,39,0.18); border-left: 4px solid var(--gold); padding: 10px 12px; border-radius: 8px; margin: 12px 0; font-size: 0.95rem; line-height: 1.45; }
+  #ownQ textarea { width: 100%; box-sizing: border-box; margin-top: 10px; min-height: 90px; font-size: 16px; }
+  .answer-card { margin-top: 14px; }
+  .form-msg.info { color: var(--ink-soft); }
+  .site-foot { max-width: 760px; margin: 30px auto 0; padding: 18px 18px calc(28px + env(safe-area-inset-bottom, 0px)); text-align: center; font-size: 0.85rem; color: var(--ink-soft); border-top: 1px solid var(--line); }
+  .site-foot a { color: var(--maroon-deep); }
+  .fb-box { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .fb-q { font-weight: 600; color: var(--maroon-deep); font-size: 0.9rem; }
+  .fb-btn { font-size: 1.3rem; min-width: 48px; min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); cursor: pointer; }
+  .fb-btn.on { border-color: var(--saffron-deep); box-shadow: 0 0 0 3px rgba(217,122,31,0.18); }
+  .fb-more { flex-basis: 100%; display: flex; flex-direction: column; gap: 8px; }
+  .fb-more textarea { width: 100%; box-sizing: border-box; min-height: 70px; font-size: 16px; }
+  .fb-more .chip { align-self: flex-start; }
+  .fb-thanks { color: var(--ink-soft); margin: 0; }
+  .reading-body p.inshort, .reading-body p.inshort + * { }
+  .reading-body p.inshort { background: #FFF3D6; border-left: 5px solid #D9A93A; padding: 12px 14px; border-radius: 10px; font-size: 1.05rem; }
+  .rep-note { background: #FFF3D6; border: 1px dashed #B8860B; border-radius: 12px; padding: 10px 14px; font-size: 0.9rem; margin: 12px 0; }
+  .glossary p { line-height: 1.6; }
+  table.keydates td { white-space: normal; vertical-align: top; }
+  table.keydates td:first-child { white-space: nowrap; font-weight: 700; color: var(--maroon-deep); padding-right: 14px; }
+  p.running { font-size: 0.92rem; color: var(--ink-soft); margin: 2px 0 10px; }
+  figure.tl { margin: 14px 0; padding: 10px 8px 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+  figure.tl figcaption { font-weight: 700; color: var(--maroon-deep); font-size: 0.92rem; margin: 0 4px 4px; }
+  .tl-yes { fill: #E3A92B; } .tl-no { fill: #E6D8BE; } .tl-per0 { fill: #F4DCAE; } .tl-per1 { fill: #EDC784; }
+  .tl-grid { stroke: rgba(122,31,31,.18); stroke-width: 1; stroke-dasharray: 2 3; }
+  .tl-tick { font-size: 9px; fill: #6b4a3a; } .tl-lane { font-size: 10px; font-weight: 700; fill: #5a1414; } .tl-label { font-size: 9px; font-weight: 700; fill: #4a0f0f; }
+  .price-tag { color: var(--ink-soft); font-size: 0.85rem; margin: 8px 0 12px; }
+  .product-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0 4px; }
+  .product { font: inherit; text-align: left; padding: 14px 12px; border-radius: 14px; border: 2px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+  .product.selected { border-color: var(--saffron-deep); box-shadow: 0 0 0 3px rgba(217,122,31,0.15); }
+  .product .p-name { color: var(--maroon-deep); font-size: 0.95rem; }
+  .product .p-price { font-size: 1.35rem; font-weight: 800; color: var(--saffron-deep); }
+  .product .p-desc { font-size: 0.78rem; color: var(--ink-soft); }
+  .rep tr.pd td { font-size: 0.8rem; color: var(--ink-soft); }
+  @media print { .rep-month { break-before: auto; } }
+  @media (max-width: 360px) { .product-row { grid-template-columns: 1fr; } }
+  #report .field { margin-bottom: 12px; }
+  .progress { margin-top: 14px; }
+  .progress .bar i { width: 0; transition: width .6s ease; }
+  .report-view { padding: 16px 16px 40px; max-width: 780px; margin: 0 auto; }
+  body.report-mode > *:not(#reportView) { display: none !important; }
+  .rep-actions { display: flex; gap: 10px; justify-content: space-between; align-items: center; position: sticky; top: env(safe-area-inset-top, 0px); padding: 8px 0; background: var(--bg, #fff8ef); z-index: 5; }
+  .rep-actions .cta { margin-top: 0; width: auto; padding-left: 18px; padding-right: 18px; }
+  .rep-head { text-align: center; border-bottom: 2px solid var(--gold, #c9a227); padding-bottom: 10px; margin-bottom: 14px; }
+  .rep-brand { font-weight: 800; letter-spacing: .08em; color: var(--saffron-deep); }
+  .rep h2 { color: var(--maroon-deep); margin: 4px 0; }
+  .rep h3 { color: var(--maroon-deep); margin: 22px 0 8px; }
+  .rep-table-wrap { overflow-x: auto; }
+  .rep table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .rep th, .rep td { text-align: left; padding: 6px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .rep tr.md td { font-weight: 700; color: var(--maroon-deep); padding-top: 10px; }
+  @media print {
+    body > *:not(#reportView) { display: none !important; }
+    #reportView { display: block !important; padding: 0; max-width: none; }
+    .no-print { display: none !important; }
+    .rep-year { break-before: page; }
+    body { background: #fff !important; }
+  }
+  .answer-card.care { border-color: #8a5cc2; }
+  .reading-body h4 { color: var(--maroon-deep); margin: 16px 0 6px; font-size: 1rem; }
+  .reading-body ul { padding-left: 20px; margin: 6px 0; }
+  .reading-body p, .reading-body li { line-height: 1.6; }
+  .reading-body pre.tbl, #factsText { overflow-x: auto; white-space: pre; font-size: 0.78rem; background: var(--chip-bg); padding: 10px; border-radius: 10px; }
+  @media (max-width: 380px) { .topic-row { grid-template-columns: 1fr; } }
+
+  /* ---------- Question / example chips ---------- */
+  textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.98rem;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    resize: vertical;
+    min-height: 84px;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip {
+    font-family: inherit;
+    font-size: 0.82rem;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--chip-bg);
+    color: var(--maroon-deep);
+    cursor: pointer;
+  }
+  .chip:hover { border-color: var(--saffron); }
+  .cta {
+    margin-top: 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #FFF6E9;
+    background: linear-gradient(135deg, var(--saffron-deep), var(--maroon));
+    border: none;
+    padding: 13px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .cta:active { transform: translateY(1px); }
+  .cta[disabled] { opacity: 0.6; cursor: default; }
+
+  /* ---------- Reading result ---------- */
+  .reading-card {
+    margin-top: 22px;
+    background: var(--panel);
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    padding: 22px;
+    display: none;
+  }
+  .reading-card.show { display: block; animation: unveil 480ms ease-out; }
+  @keyframes unveil {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .sources-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .source-chip {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--maroon-deep);
+    font-weight: 600;
+  }
+  .reading-body { font-size: 0.98rem; }
+  .reading-body p { margin: 0 0 14px; }
+  .reading-body p:last-child { margin-bottom: 0; }
+  .empty-state {
+    margin-top: 22px;
+    padding: 18px 20px;
+    border-radius: 10px;
+    border: 1px dashed var(--line);
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    display: none;
+  }
+  .empty-state.show { display: block; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  @media (max-width: 420px) {
+    .field-grid { grid-template-columns: 1fr 1fr; }
+    .cell .planets { font-size: 0.72rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reading-card.show { animation: none; }
+  }
+</style>
+</head>
+<body>
+<script>
+window.__c11ready = false;
+window.addEventListener("error", function (e) {
+  var b = document.getElementById("c11err");
+  if (!b) { b = document.createElement("div"); b.id = "c11err"; b.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99999;background:#b00020;color:#fff;padding:10px;font:14px sans-serif"; document.body.appendChild(b); }
+  b.textContent = "Page error: " + e.message + " (line " + e.lineno + ") - please send a screenshot of this to Claude";
+});
+</script>
+  <button type="button" class="lang-btn" id="langBtn">हिंदी</button>
+
+<div class="hero">
+<canvas class="space-canvas" aria-hidden="true"></canvas>
+<div class="hero-top"><p class="wordmark">Cosmic 11</p></div>
+<div class="hero-inner">
+<div class="hero-copy">
+  <h1 id="heroH1">Your birth chart, explained in plain words.</h1>
+  <p class="hero-sub" id="heroSub">Free Rashi, Cosmic Score and daily horoscope. Every answer names the classical book it comes from, and says so when the books are silent.</p>
+  <ul class="trust-row"><li id="tr1">Free to start</li><li id="tr2">Every answer cites its book</li><li id="tr3">No fear, no fake claims</li></ul>
+</div>
+<div class="orbit-wrap">
+  <svg class="orbit-svg" viewBox="0 0 320 240" role="img" aria-label="Earth and the planets revolving around the Sun on elliptical orbits">
+    <title>Earth and the planets revolving around the Sun on elliptical orbits</title>
+    <defs>
+      <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFF0B8"/>
+        <stop offset="50%" stop-color="#FFA23A"/>
+        <stop offset="100%" stop-color="#D9531E"/>
+      </radialGradient>
+      <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFB25A" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#FF7A2A" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <g id="orbitRings"></g>
+    <circle cx="160" cy="120" r="46" fill="url(#haloGrad)"/>
+    <circle id="sunGlow" class="sun-glow" cx="160" cy="120" r="24" opacity="0.3"/>
+    <circle cx="160" cy="120" r="13" fill="url(#sunGrad)"/>
+    <g id="orbitBodies"></g>
+  </svg>
+</div>
+</div>
+</div>
+
+<div class="wrap">
+
+  <section class="block" id="profile">
+    <div class="card form-card">
+    <h2 class="block-title">Discover Your Cosmic Profile</h2>
+    <p class="block-sub">Enter your birth details to see your Rashi, your Cosmic Score and today's personal horoscope. It is calculated instantly on your phone.</p>
+      <form id="birthForm" autocomplete="off" novalidate onsubmit="if(!window.__c11ready){document.getElementById('formMsg').textContent='The page script did not start. Press Ctrl+F5 and try again; if it repeats, send a screenshot to Claude.';return false;}">
+        <div class="field-grid">
+          <div class="field full">
+            <label for="bname">Your name</label>
+            <input id="bname" type="text" placeholder="e.g. Harinder Singh" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="bdate">Date of birth</label>
+            <input id="bdate" type="date" min="1900-01-01">
+          </div>
+          <div class="field">
+            <label for="btime">Time of birth</label>
+            <input id="btime" type="time">
+          </div>
+          <div class="field full">
+            <label for="bplace">Place of birth</label>
+            <input id="bplace" type="text" list="cityList" placeholder="Start typing your city" autocomplete="off">
+            <datalist id="cityList"></datalist>
+          </div>
+        </div>
+        <details class="coords" id="coordsBox">
+          <summary>Place not in the list? Enter coordinates</summary>
+          <div class="field-grid" style="margin-top:10px;">
+            <div class="field"><label for="mlat">Latitude</label><input id="mlat" type="text" inputmode="decimal" placeholder="e.g. 28.8955"></div>
+            <div class="field"><label for="mlon">Longitude</label><input id="mlon" type="text" inputmode="decimal" placeholder="e.g. 76.6066"></div>
+            <div class="field full"><label for="mtz">Time zone (hours from UTC)</label><input id="mtz" type="text" inputmode="decimal" placeholder="5.5 for India"></div>
+          </div>
+        </details>
+        <p class="form-msg" id="formMsg" role="alert"></p>
+        <div class="form-actions">
+          <button type="submit" class="cta" id="profileBtn">Reveal My Cosmic Profile</button>
+          <button type="button" class="chip" id="exampleBtn">Try an example</button>
+        </div>
+        <p class="fine">Times are read as Indian Standard Time (UTC+5:30) for places in India. Lahiri ayanamsa, whole-sign houses.</p>
+      </form>
+    </div>
+
+    <div id="results" hidden>
+      <div class="card" style="margin-top:16px;" id="idCard"></div>
+      <div class="card" id="scoreCard"></div>
+      <div class="card" id="chartCard">
+        <h3 class="card-title">Your Kundli</h3>
+        <p class="fine" style="margin:0 0 10px;">Rasi chart (D1). Houses count anticlockwise from your Lagna at the top.</p>
+        <div class="kundli-wrap" style="margin-top:0;"><div id="kundli"></div></div>
+      </div>
+      <div class="card" id="dailyCard"></div>
+      <p class="engine-note" id="engineNote"></p>
+    </div>
+  </section>
+
+
+  <section class="block" id="board">
+    <h2 class="block-title board-title" id="boardTitle">What you get, free</h2>
+    <p class="block-sub" id="boardSub">Everything below is calculated from your own birth details.</p>
+    <div class="board">
+      <article class="tile t-rashi">
+        <svg viewBox="0 0 120 90" aria-hidden="true"><circle cx="60" cy="45" r="34" fill="#FFF3D6" opacity=".55"/><path d="M78 20a30 30 0 1 0 0 50a24 24 0 1 1 0-50z" fill="#7A1F1F"/><circle cx="92" cy="22" r="3" fill="#7A1F1F"/><circle cx="20" cy="70" r="2" fill="#7A1F1F"/><circle cx="100" cy="64" r="2" fill="#7A1F1F"/></svg>
+        <h3 id="tl1h">Your Rashi and Nakshatra</h3>
+        <p id="tl1p">Your Moon sign, birth star and Lagna, with the ruling planet of each.</p>
+      </article>
+      <article class="tile t-score">
+        <svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="60" cy="42" r="30" fill="none" stroke="#E7C98A" stroke-width="9"/><circle cx="60" cy="42" r="30" fill="none" stroke="#B8860B" stroke-width="9" stroke-linecap="round" stroke-dasharray="134 188" transform="rotate(-90 60 42)"/><text x="60" y="49" text-anchor="middle" font-size="22" font-weight="700" fill="#5C1414" font-family="Mukta,sans-serif">71</text></svg>
+        <h3 id="tl2h">Cosmic Score</h3>
+        <p id="tl2p">One number out of 100 for the strength of your planets, with the reason for each.</p>
+      </article>
+      <article class="tile t-day">
+        <svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="#FFE9B0"/><circle cx="72" cy="34" r="24" fill="#3A2068"/><circle cx="18" cy="16" r="1.6" fill="#fff"/><circle cx="102" cy="58" r="1.6" fill="#fff"/><circle cx="104" cy="14" r="1.2" fill="#fff"/><circle cx="14" cy="64" r="1.2" fill="#fff"/></svg>
+        <h3 id="tl3h">Today's horoscope</h3>
+        <p id="tl3p">A fresh reading every day, from where the Moon and planets stand against your chart.</p>
+      </article>
+      <article class="tile t-kundli">
+        <svg viewBox="0 0 120 100" aria-hidden="true"><rect x="12" y="8" width="96" height="84" rx="4" fill="#FFF8EE" stroke="#7A1F1F" stroke-width="2"/><path d="M12 8L108 92M108 8L12 92M60 8L108 50L60 92L12 50Z" fill="none" stroke="#7A1F1F" stroke-width="1.6"/><circle cx="60" cy="30" r="3.5" fill="#B8860B"/><circle cx="36" cy="50" r="3.5" fill="#7A1F1F"/><circle cx="84" cy="50" r="3.5" fill="#7A1F1F"/></svg>
+        <h3 id="tl4h">Your Kundli chart</h3>
+        <p id="tl4p">The classic North Indian chart, drawn for you.</p>
+      </article>
+      <article class="tile t-books">
+        <svg viewBox="0 0 120 80" aria-hidden="true"><rect x="22" y="48" width="76" height="14" rx="3" fill="#7A1F1F"/><rect x="28" y="32" width="68" height="14" rx="3" fill="#B8860B"/><rect x="18" y="16" width="72" height="14" rx="3" fill="#5C1414"/><rect x="26" y="21" width="30" height="3" rx="1.5" fill="#FFE9C4"/></svg>
+        <h3 id="tl5h">Every answer names its book</h3>
+        <p id="tl5p">Brihat Jataka, Brihat Samhita and Phala Deepika. When they are silent, we say so.</p>
+      </article>
+      <article class="tile t-report">
+        <svg viewBox="0 0 120 70" aria-hidden="true"><rect x="8" y="40" width="14" height="22" rx="3" fill="#E7C98A"/><rect x="28" y="28" width="14" height="34" rx="3" fill="#B8860B"/><rect x="48" y="18" width="14" height="44" rx="3" fill="#7A1F1F"/><rect x="68" y="32" width="14" height="30" rx="3" fill="#E7C98A"/><rect x="88" y="12" width="14" height="50" rx="3" fill="#B8860B"/></svg>
+        <h3 id="tl6h">A year, month by month</h3>
+        <p id="tl6p">A guidance report in plain words, with key dates and a Jupiter and Saturn timeline.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" id="ask">
+    <h2 class="block-title" id="askTitle">Ask the Classical Texts</h2>
+    <p class="block-sub" id="askSub"></p>
+    <div class="topic-row">
+      <button class="topic" data-topic="marriage">💍 <span>Marriage timing</span></button>
+      <button class="topic" data-topic="career">💼 <span>Career &amp; job</span></button>
+      <button class="topic" data-topic="money">💰 <span>Money</span></button>
+    </div>
+    <details class="coords" id="ownQ"><summary>Or ask your own question</summary>
+      <textarea id="question" maxlength="500"></textarea>
+      <button class="cta" id="askBtn">Ask</button>
+    </details>
+    <p class="fine" id="priceNote"></p>
+    <p class="patience" id="patienceAsk">Please be patient. Each answer is calculated carefully from your own chart and the classical texts, and it can take up to a minute. For correct results, please do not close or refresh the page while it works.</p>
+    <p class="form-msg" id="askMsg" role="status" aria-live="polite"></p>
+    <div class="card answer-card" id="answerCard" hidden>
+      <div class="sources-row" id="answerSources"></div>
+      <div id="answerTimeline"></div>
+      <div class="reading-body" id="answerBody"></div>
+      <details class="how" id="factsBox" hidden><summary>Calculated timeline used for this answer</summary><pre id="factsText"></pre></details>
+    </div>
+  </section>
+
+  <section class="block" id="report">
+    <h2 class="block-title" id="repTitle">Guidance Reports</h2>
+    <p class="block-sub" id="repSub"></p>
+    <div class="product-row" role="radiogroup">
+      <button type="button" class="product selected" data-kind="year1" role="radio" aria-checked="true"><b class="p-name"></b><span class="p-price">₹99</span><span class="p-desc"></span></button>
+      <button type="button" class="product" data-kind="year5" role="radio" aria-checked="false"><b class="p-name"></b><span class="p-price">₹499</span><span class="p-desc"></span></button>
+    </div>
+    <p class="price-tag" id="repPrice"></p>
+    <div class="field"><label for="betaCode">Beta invite code</label><input id="betaCode" type="text" autocomplete="off" autocapitalize="characters"></div>
+    <p class="patience" id="patienceRep">Please be patient. Your report is calculated month by month and checked against your chart, so it takes a few minutes. A correct report is worth the wait. Keep this page open and do not refresh it.</p>
+    <button class="cta" id="repBtn">Prepare my report</button>
+    <div class="progress" id="repProgress" hidden><div class="bar"><i id="repBar"></i></div></div>
+    <p class="form-msg" id="repMsg" role="status" aria-live="polite"></p>
+  </section>
+
+
+</div>
+
+<footer class="site-foot" id="siteFoot"><a href="/privacy" id="lnkPrivacy">Privacy</a> &middot; <a href="/terms" id="lnkTerms">Terms, disclaimer &amp; refunds</a> &middot; <a href="/source" id="lnkSource">Source code</a>
+  <div class="fine" id="footNote">Swiss Ephemeris Inside. Readings are for reflection, not professional advice.</div></footer>
+<div id="reportView" class="report-view" hidden></div>
+<script>
+  // ---------- Astro engine (tested against Swiss Ephemeris) ----------
+/* Cosmic 11 astro engine. Pure functions, no DOM. Sidereal (Lahiri), whole-sign houses. */
+  const Astro = (function () {
+    "use strict";
+    const D2R = Math.PI / 180, R2D = 180 / Math.PI;
+    const norm = x => ((x % 360) + 360) % 360;
+    const sd = x => Math.sin(x * D2R), cd = x => Math.cos(x * D2R);
+    const angDiff = (a, b) => { const d = norm(a - b); return d > 180 ? d - 360 : d; };
+  
+    const SIGNS = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+    const RASHI = ["Mesha","Vrishabha","Mithuna","Karka","Simha","Kanya","Tula","Vrishchika","Dhanu","Makara","Kumbha","Meena"];
+    const NAKSHATRAS = ["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha",
+      "Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha",
+      "Uttara Ashadha","Shravana","Dhanishtha","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"];
+    const NAK_SPAN = 360 / 27;
+    const ORDER = ["sun","moon","mars","mercury","jupiter","venus","saturn","rahu","ketu"];
+    const NAME = { sun:"Sun", moon:"Moon", mars:"Mars", mercury:"Mercury", jupiter:"Jupiter", venus:"Venus", saturn:"Saturn", rahu:"Rahu", ketu:"Ketu" };
+    const SEVEN = ["sun","moon","mars","mercury","jupiter","venus","saturn"];
+  
+    /* ---------- time ---------- */
+    function julianDay(y, m, d, h) {
+      if (m <= 2) { y -= 1; m += 12; }
+      const A = Math.floor(y / 100), B = 2 - A + Math.floor(A / 4);
+      return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524.5 + h / 24;
+    }
+    const jdFromMs = ms => ms / 86400000 + 2440587.5;
+    const DT = [[1900,-2.8],[1920,21.2],[1940,24.3],[1950,29.1],[1960,33.1],[1970,40.2],[1980,50.5],[1990,56.9],
+                [2000,63.8],[2010,66.1],[2020,69.4],[2030,72.5],[2050,93],[2100,203]];
+    function deltaT(jd) {
+      const y = 2000 + (jd - 2451545) / 365.25;
+      if (y <= DT[0][0]) return DT[0][1];
+      for (let i = 1; i < DT.length; i++) if (y <= DT[i][0]) {
+        const [y0, v0] = DT[i - 1], [y1, v1] = DT[i];
+        return v0 + (v1 - v0) * (y - y0) / (y1 - y0);
+      }
+      return DT[DT.length - 1][1];
+    }
+  
+    /* ---------- ayanamsa (Lahiri) & nutation ---------- */
+    const P = T => (5029.0966 * T + 1.11113 * T * T) / 3600;          // general precession in longitude, degrees
+    const T0_LAHIRI = (2435553.5 - 2451545) / 36525;
+    function ayanamsa(jd) { const T = (jd - 2451545) / 36525; return 23.245524743 + P(T) - P(T0_LAHIRI); }
+    function nutation(T) {
+      const Om = 125.04452 - 1934.136261 * T, Ls = 280.4665 + 36000.7698 * T, Lm = 218.3165 + 481267.8813 * T;
+      return {
+        dpsi: (-17.20 * sd(Om) - 1.32 * sd(2 * Ls) - 0.23 * sd(2 * Lm) + 0.21 * sd(2 * Om)) / 3600,
+        deps: (9.20 * cd(Om) + 0.57 * cd(2 * Ls) + 0.10 * cd(2 * Lm) - 0.09 * cd(2 * Om)) / 3600
+      };
+    }
+    const obliquity = T => 23.4392911 - 0.0130042 * T - 1.64e-7 * T * T + 5.04e-7 * T * T * T;
+  
+    /* ---------- Sun (Meeus ch.25) ---------- */
+    function sunLon(T) {
+      const L0 = norm(280.46646 + 36000.76983 * T + 0.0003032 * T * T);
+      const M = norm(357.52911 + 35999.05029 * T - 0.0001537 * T * T);
+      const C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * sd(M) + (0.019993 - 0.000101 * T) * sd(2 * M) + 0.000289 * sd(3 * M);
+      const Om = 125.04 - 1934.136 * T;
+      return norm(L0 + C - 0.00569 - 0.00478 * sd(Om));               // apparent, true equinox of date
+    }
+  
+    /* ---------- Moon (Meeus ch.47, longitude terms) ---------- */
+    const MOON = [
+      [0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],[0,1,0,0,-185116],[0,0,0,2,-114332],
+      [2,0,-2,0,58793],[2,-1,-1,0,57066],[2,0,1,0,53322],[2,-1,0,0,45758],[0,1,-1,0,-40923],[1,0,0,0,-34720],
+      [0,1,1,0,-30383],[2,0,0,-2,15327],[0,0,1,2,-12528],[0,0,1,-2,10980],[4,0,-1,0,10675],[0,0,3,0,10034],
+      [4,0,-2,0,8548],[2,1,-1,0,-7888],[2,1,0,0,-6766],[1,0,-1,0,-5163],[1,1,0,0,4987],[2,-1,1,0,4036],
+      [2,0,2,0,3994],[4,0,0,0,3861],[2,0,-3,0,3665],[0,1,-2,0,-2689],[2,0,-1,2,-2602],[2,-1,-2,0,2390],
+      [1,0,1,0,-2348],[2,-2,0,0,2236],[0,1,2,0,-2120],[0,2,0,0,-2069],[2,-2,-1,0,2048],[2,0,1,-2,-1773],
+      [2,0,0,2,-1595],[4,-1,-1,0,1215],[0,0,2,2,-1110],[3,0,-1,0,-892],[2,1,1,0,-810],[4,-1,-2,0,759],
+      [0,2,-1,0,-713],[2,2,-1,0,-700],[2,1,-2,0,691],[2,-1,0,-2,596],[4,0,1,0,549],[0,0,4,0,537],
+      [4,-1,0,0,520],[1,0,-2,0,-487],[2,1,0,-2,-399],[0,0,2,-2,-381],[1,1,1,0,351],[3,0,-2,0,-340],
+      [4,0,-3,0,330],[2,-1,2,0,327],[0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294]
+    ];
+    function moonLon(T) {
+      const T2 = T * T, T3 = T2 * T, T4 = T3 * T;
+      const Lp = norm(218.3164477 + 481267.88123421 * T - 0.0015786 * T2 + T3 / 538841 - T4 / 65194000);
+      const D  = norm(297.8501921 + 445267.1114034 * T - 0.0018819 * T2 + T3 / 545868 - T4 / 113065000);
+      const M  = norm(357.5291092 + 35999.0502909 * T - 0.0001536 * T2 + T3 / 24490000);
+      const Mp = norm(134.9633964 + 477198.8675055 * T + 0.0087414 * T2 + T3 / 69699 - T4 / 14712000);
+      const F  = norm(93.2720950 + 483202.0175233 * T - 0.0036539 * T2 - T3 / 3526000 + T4 / 863310000);
+      const A1 = norm(119.75 + 131.849 * T), A2 = norm(53.09 + 479264.290 * T);
+      const E = 1 - 0.002516 * T - 0.0000074 * T2;
+      let sl = 0;
+      for (const t of MOON) {
+        const em = Math.abs(t[1]) === 1 ? E : Math.abs(t[1]) === 2 ? E * E : 1;
+        sl += t[4] * em * sd(t[0] * D + t[1] * M + t[2] * Mp + t[3] * F);
+      }
+      sl += 3958 * sd(A1) + 1962 * sd(Lp - F) + 318 * sd(A2);
+      return norm(Lp + sl / 1e6);                                     // mean equinox of date
+    }
+  
+    /* ---------- planets (JPL approximate Keplerian elements, 1800-2050) ---------- */
+    const EL = {
+      mercury: [0.38709927, 0.00000037, 0.20563593, 0.00001906, 7.00497902, -0.00594749, 252.25032350, 149472.67411175, 77.45779628, 0.16047689, 48.33076593, -0.12534081],
+      venus:   [0.72333566, 0.00000390, 0.00677672, -0.00004107, 3.39467605, -0.00078890, 181.97909950, 58517.81538729, 131.60246718, 0.00268329, 76.67984255, -0.27769418],
+      earth:   [1.00000261, 0.00000562, 0.01671123, -0.00004392, -0.00001531, -0.01294668, 100.46457166, 35999.37244981, 102.93768193, 0.32327364, 0.0, 0.0],
+      mars:    [1.52371034, 0.00001847, 0.09339410, 0.00007882, 1.84969142, -0.00813131, -4.55343205, 19140.30268499, -23.94362959, 0.44441088, 49.55953891, -0.29257343],
+      jupiter: [5.20288700, -0.00011607, 0.04838624, -0.00013253, 1.30439695, -0.00183714, 34.39644051, 3034.74612775, 14.72847983, 0.21252668, 100.47390909, 0.20469106],
+      saturn:  [9.53667594, -0.00125060, 0.05386179, -0.00050991, 2.48599187, 0.00193609, 49.95424423, 1222.49362201, 92.59887831, -0.41897216, 113.66242448, -0.28867794]
+    };
+    function helio(el, T) {
+      const a = el[0] + el[1] * T, e = el[2] + el[3] * T, I = el[4] + el[5] * T;
+      const L = el[6] + el[7] * T, wbar = el[8] + el[9] * T, Om = el[10] + el[11] * T;
+      const w = wbar - Om;
+      let M = norm(L - wbar); if (M > 180) M -= 360;
+      const es = e * R2D; let E = M + es * sd(M);
+      for (let i = 0; i < 15; i++) {
+        const dE = (M - (E - es * sd(E))) / (1 - e * cd(E));
+        E += dE; if (Math.abs(dE) < 1e-10) break;
+      }
+      const xp = a * (cd(E) - e), yp = a * Math.sqrt(1 - e * e) * sd(E);
+      const cw = cd(w), sw = sd(w), cO = cd(Om), sO = sd(Om), cI = cd(I), sI = sd(I);
+      return {
+        x: (cw * cO - sw * sO * cI) * xp + (-sw * cO - cw * sO * cI) * yp,
+        y: (cw * sO + sw * cO * cI) * xp + (-sw * sO + cw * cO * cI) * yp,
+        z: (sw * sI) * xp + (cw * sI) * yp
+      };
+    }
+  
+    /* ---------- sidereal longitudes of all nine bodies at a UT Julian day ---------- */
+    function positions(jdUT) {
+      const jdTT = jdUT + deltaT(jdUT) / 86400, T = (jdTT - 2451545) / 36525;
+      const ayan = ayanamsa(jdUT), nut = nutation(T);
+      const sid = trop => norm(trop - ayan);
+      const out = {};
+      out.sun = sid(sunLon(T));
+      out.moon = sid(moonLon(T) + nut.dpsi);
+      const earth = helio(EL.earth, T);
+      for (const id of ["mercury","venus","mars","jupiter","saturn"]) {
+        const p = helio(EL[id], T);
+        const lonJ2000 = norm(Math.atan2(p.y - earth.y, p.x - earth.x) * R2D);
+        out[id] = sid(lonJ2000 + P(T) + nut.dpsi);
+      }
+      const node = norm(125.0445479 - 1934.1362891 * T + 0.0020754 * T * T + T * T * T / 467441 - T * T * T * T / 60616000);
+      out.rahu = sid(node + nut.dpsi);
+      out.ketu = norm(out.rahu + 180);
+      return out;
+    }
+    function ascendant(jdUT, lat, lon) {
+      const T = (jdUT - 2451545) / 36525, nut = nutation(T), eps = obliquity(T) + nut.deps;
+      const gmst = norm(280.46061837 + 360.98564736629 * (jdUT - 2451545) + 0.000387933 * T * T - T * T * T / 38710000);
+      const ramc = norm(gmst + nut.dpsi * cd(eps) + lon);
+      return norm(Math.atan2(cd(ramc), -(sd(ramc) * cd(eps) + Math.tan(lat * D2R) * sd(eps))) * R2D - ayanamsa(jdUT));
+    }
+    function isRetro(id, jd) {
+      if (id === "sun" || id === "moon") return false;
+      if (id === "rahu" || id === "ketu") return true;
+      return angDiff(positions(jd + 0.05)[id], positions(jd - 0.05)[id]) < 0;
+    }
+    const signOf = lon => Math.floor(lon / 30);
+    const degIn = lon => lon % 30;
+    const nakOf = lon => Math.floor(lon / NAK_SPAN);
+    const padaOf = lon => Math.floor((lon % NAK_SPAN) / (NAK_SPAN / 4)) + 1;
+  
+    /* ---------- natal chart ---------- */
+    // input: {year,month,day,hour,minute,tz,lat,lon}  (local civil time, tz = hours east of UTC)
+    function natal(inp) {
+      const jd = julianDay(inp.year, inp.month, inp.day, inp.hour + inp.minute / 60 - inp.tz);
+      const pos = positions(jd);
+      const ascLon = ascendant(jd, inp.lat, inp.lon), ascSign = signOf(ascLon);
+      const planets = ORDER.map(id => {
+        const lon = pos[id], sign = signOf(lon);
+        return { id, name: NAME[id], lon, sign, signName: SIGNS[sign], deg: degIn(lon),
+                 house: ((sign - ascSign + 12) % 12) + 1, nak: nakOf(lon), nakName: NAKSHATRAS[nakOf(lon)],
+                 pada: padaOf(lon), retro: isRetro(id, jd) };
+      });
+      const byId = {}; planets.forEach(p => byId[p.id] = p);
+      return { jd, ayanamsa: ayanamsa(jd),
+               asc: { lon: ascLon, sign: ascSign, signName: SIGNS[ascSign], deg: degIn(ascLon), nak: nakOf(ascLon), nakName: NAKSHATRAS[nakOf(ascLon)], pada: padaOf(ascLon) },
+               planets, byId };
+    }
+  
+    /* ---------- Vimshottari dasha ---------- */
+    const DASHA = [["Ketu",7],["Venus",20],["Sun",6],["Moon",10],["Mars",7],["Rahu",18],["Jupiter",16],["Saturn",19],["Mercury",17]];
+    const YEAR_MS = 365.25 * 86400000;
+    function dasha(chart, birthMs, nowMs) {
+      const moon = chart.byId.moon, frac = (moon.lon % NAK_SPAN) / NAK_SPAN;
+      let idx = moon.nak % 9, years = DASHA[idx][1];
+      let end = birthMs + years * (1 - frac) * YEAR_MS, start = end - years * YEAR_MS;
+      while (end < nowMs) { idx = (idx + 1) % 9; years = DASHA[idx][1]; start = end; end = start + years * YEAR_MS; }
+      let ad = null, cur = start;
+      for (let k = 0; k < 9; k++) {
+        const j = (idx + k) % 9, len = years * DASHA[j][1] / 120 * YEAR_MS;
+        if (nowMs < cur + len || k === 8) { ad = { lord: DASHA[j][0], start: cur, end: cur + len }; break; }
+        cur += len;
+      }
+      return { lord: DASHA[idx][0], years, start, end, antar: ad, beforeBirth: start < birthMs };
+    }
+  
+    /* ---------- dignity tables (Parashari) ---------- */
+    const SIGN_LORD = ["mars","venus","mercury","moon","sun","mercury","venus","mars","jupiter","saturn","saturn","jupiter"];
+    const EXALT = { sun:0, moon:1, mars:9, mercury:5, jupiter:3, venus:11, saturn:6 };
+    const OWN = { sun:[4], moon:[3], mars:[0,7], mercury:[2,5], jupiter:[8,11], venus:[1,6], saturn:[9,10] };
+    const MOOL = { sun:[4,0,20], moon:[1,3,30], mars:[0,0,12], mercury:[5,16,20], jupiter:[8,0,10], venus:[6,0,15], saturn:[10,0,20] };
+    const REL = {
+      sun:     { f:["moon","mars","jupiter"], e:["venus","saturn"] },
+      moon:    { f:["sun","mercury"],         e:[] },
+      mars:    { f:["sun","moon","jupiter"],  e:["mercury"] },
+      mercury: { f:["sun","venus"],           e:["moon"] },
+      jupiter: { f:["sun","moon","mars"],     e:["mercury","venus"] },
+      venus:   { f:["mercury","saturn"],      e:["sun","moon"] },
+      saturn:  { f:["mercury","venus"],       e:["sun","moon","mars"] }
+    };
+    function dignity(id, sign, deg) {
+      if (EXALT[id] === sign) return { key: "exalted", label: "Exalted", pts: 100 };
+      if ((EXALT[id] + 6) % 12 === sign) return { key: "debilitated", label: "Debilitated", pts: 12 };
+      const m = MOOL[id];
+      if (m[0] === sign && deg >= m[1] && deg < m[2]) return { key: "moolatrikona", label: "Moolatrikona", pts: 90 };
+      if (OWN[id].includes(sign)) return { key: "own", label: "Own sign", pts: 85 };
+      const lord = SIGN_LORD[sign];
+      if (REL[id].f.includes(lord)) return { key: "friend", label: "Friend's sign", pts: 68 };
+      if (REL[id].e.includes(lord)) return { key: "enemy", label: "Enemy's sign", pts: 32 };
+      return { key: "neutral", label: "Neutral sign", pts: 50 };
+    }
+    const kendraFrom = (ref, s) => [0, 3, 6, 9].includes(((s - ref) + 12) % 12);
+    // Phala Deepika (ch.7): debilitation is cancelled if the dispositor, the lord of the exaltation sign,
+    // or the debilitated planet itself stands in a Kendra from the Lagna or the Moon.
+    function neechaBhanga(chart, id) {
+      const inK = pid => { const s = chart.byId[pid].sign; return kendraFrom(chart.asc.sign, s) || kendraFrom(chart.byId.moon.sign, s); };
+      return inK(SIGN_LORD[chart.byId[id].sign]) || inK(SIGN_LORD[EXALT[id]]) || inK(id);
+    }
+    const COMBUST = { moon: 12, mars: 17, mercury: 14, jupiter: 11, venus: 10, saturn: 15 };
+    function houseScore(benefic, h) {
+      if ([1, 4, 5, 7, 9, 10].includes(h)) return benefic ? 90 : 70;
+      if (h === 11) return benefic ? 70 : 85;
+      if (h === 2) return 70;
+      if (h === 3 || h === 6) return benefic ? 40 : 80;
+      return 25;                                                      // 8, 12
+    }
+    const WEIGHT = { sun: 1.2, moon: 1.4, mars: 1, mercury: 1, jupiter: 1.2, venus: 1, saturn: 1 };
+    const bandOf = s => s >= 80 ? "Radiant" : s >= 65 ? "Strong" : s >= 50 ? "Balanced" : s >= 35 ? "Developing" : "Tender";
+  
+    function cosmicScore(chart) {
+      const sun = chart.byId.sun, elong = norm(chart.byId.moon.lon - sun.lon);
+      const lagnaLord = SIGN_LORD[chart.asc.sign];
+      let num = 0, den = 0;
+      const rows = SEVEN.map(id => {
+        const p = chart.byId[id];
+        let dig = dignity(id, p.sign, p.deg), cancelled = false;
+        if (dig.key === "debilitated" && neechaBhanga(chart, id)) { dig = { key: "cancelled", label: "Debilitated, cancelled", pts: 55 }; cancelled = true; }
+        const benefic = id === "moon" ? (elong >= 84 && elong <= 264) : ["jupiter", "venus", "mercury"].includes(id);
+        const hp = houseScore(benefic, p.house);
+        let lim = COMBUST[id]; if (lim && p.retro && (id === "mercury" || id === "venus")) lim -= 2;
+        const combust = !!lim && Math.abs(angDiff(p.lon, sun.lon)) < lim;
+        const score = Math.max(0, Math.min(100, Math.round(0.6 * dig.pts + 0.4 * hp - (combust ? 15 : 0))));
+        const w = WEIGHT[id] + (id === lagnaLord ? 0.5 : 0);
+        num += w * score; den += w;
+        return { id, name: NAME[id], sign: p.sign, signName: p.signName, house: p.house, retro: p.retro,
+                 dignity: dig.key, label: dig.label, digPts: dig.pts, housePts: hp, combust, cancelled, score, lagnaLord: id === lagnaLord };
+      });
+      const score = Math.round(num / den);
+      return { score, band: bandOf(score), rows, lagnaLord: NAME[lagnaLord] };
+    }
+  
+    /* ---------- daily forecast: Chandra Bala + Tara Bala + Gochara (Phala Deepika transit chapter) ---------- */
+    const CHANDRA_GOOD = [1, 3, 6, 7, 10, 11];
+    const TARA = ["Janma","Sampat","Vipat","Kshema","Pratyari","Sadhaka","Vadha","Mitra","Ati-Mitra"];
+    const TARA_GOOD = [2, 4, 6, 8, 9];
+    const GOCHARA = {
+      sun:     { fav: [3, 6, 10, 11],                    vedha: { 3: 9, 6: 12, 10: 4, 11: 5 } },
+      moon:    { fav: [1, 3, 6, 7, 10, 11],              vedha: { 1: 5, 3: 9, 6: 12, 7: 2, 10: 4, 11: 8 } },
+      mars:    { fav: [3, 6, 10, 11],                    vedha: { 3: 9, 6: 12, 10: 4, 11: 5 } },
+      mercury: { fav: [2, 4, 6, 8, 10, 11],              vedha: { 2: 5, 4: 3, 6: 9, 8: 1, 10: 8, 11: 12 } },
+      jupiter: { fav: [2, 5, 7, 9, 11],                  vedha: { 2: 12, 5: 4, 7: 3, 9: 10, 11: 8 } },
+      venus:   { fav: [1, 2, 3, 4, 5, 8, 9, 11, 12],     vedha: { 1: 8, 2: 7, 3: 1, 4: 10, 5: 9, 8: 5, 9: 11, 11: 6, 12: 3 } },
+      saturn:  { fav: [3, 6, 11],                        vedha: { 3: 12, 6: 9, 11: 5 } }
+    };
+    const GW = { sun: 1, mars: 1, mercury: 1, jupiter: 1.5, venus: 1, saturn: 1.5 };
+    const exempt = (a, b) => (a === "sun" && b === "saturn") || (a === "saturn" && b === "sun") || (a === "moon" && b === "mercury") || (a === "mercury" && b === "moon");
+    const FOCUS = {
+      1: "Your body and mood are the theme today. Look after your comfort, food and rest.",
+      2: "Money and speech need care today. Watch spending and think before you speak.",
+      3: "Courage and effort are rewarded. Take the initiative, reach out and finish pending tasks.",
+      4: "Peace of mind may dip. Keep things simple at home and avoid unnecessary travel.",
+      5: "Plans may hit small hurdles. Stay patient and avoid rushing important choices.",
+      6: "Strong day to handle rivals, health routines and unfinished work. Effort pays off.",
+      7: "Relationships and partnerships are favoured. Good for meetings, negotiations and enjoyment.",
+      8: "Be cautious with health, money and risky moves. Slow down and double-check details.",
+      9: "Progress may feel delayed. Avoid forcing outcomes, and lean on experience and advice.",
+      10: "Career and responsibilities shine. A good day to act on important work.",
+      11: "Gains and fulfilment of wishes are indicated. Good for networking, income and goals.",
+      12: "Expenses and restlessness can rise. Avoid risks, rest well and keep spending in check."
+    };
+    const HEADLINE = s => s >= 75 ? "A bright, supportive day. Momentum is on your side."
+      : s >= 60 ? "A steady, favourable day with a few things to watch."
+      : s >= 45 ? "A mixed day. Go step by step and avoid rushing big decisions."
+      : s >= 30 ? "A slower day. Protect your energy and keep plans simple."
+      : "A day to be gentle with yourself. Avoid risks and confrontations.";
+  
+    function daily(chart, nowMs) {
+      const pos = positions(jdFromMs(nowMs)), nm = chart.byId.moon;
+      const hFrom = id => ((signOf(pos[id]) - nm.sign + 12) % 12) + 1;
+      const H = {}; SEVEN.forEach(id => H[id] = hFrom(id));
+      const moonH = H.moon, chandraGood = CHANDRA_GOOD.includes(moonH);
+      const tara = ((nakOf(pos.moon) - nm.nak + 27) % 27) % 9 + 1, taraGood = TARA_GOOD.includes(tara);
+      let gnum = 0, gden = 0;
+      const gochara = ["sun","mars","mercury","jupiter","venus","saturn"].map(id => {
+        const g = GOCHARA[id], h = H[id], fav = g.fav.includes(h);
+        let state = "challenging", blocker = null;
+        if (fav) {
+          state = "supportive";
+          const v = g.vedha[h];
+          for (const o of SEVEN) if (o !== id && !exempt(id, o) && H[o] === v) { state = "obstructed"; blocker = NAME[o]; break; }
+        }
+        gnum += GW[id] * (state === "supportive" ? 1 : state === "obstructed" ? 0.4 : 0); gden += GW[id];
+        return { id, name: NAME[id], house: h, state, blocker };
+      });
+      const chandraPts = chandraGood ? 90 : 25, taraPts = taraGood ? 90 : tara === 1 ? 55 : 20, gPts = 100 * gnum / gden;
+      const score = Math.round(0.40 * chandraPts + 0.25 * taraPts + 0.35 * gPts);
+      const sat = H.saturn;
+      return { score, band: bandOf(score), headline: HEADLINE(score), focus: FOCUS[moonH],
+               moonSign: SIGNS[signOf(pos.moon)], moonNak: NAKSHATRAS[nakOf(pos.moon)], moonH,
+               chandra: { house: moonH, good: chandraGood },
+               tara: { n: tara, name: TARA[tara - 1], good: taraGood },
+               gochara, supportive: gochara.filter(g => g.state === "supportive").map(g => g.name),
+               careful: gochara.filter(g => g.state !== "supportive").map(g => g.name),
+               sadeSati: [12, 1, 2].includes(sat), saturnHouse: sat };
+    }
+  
+    const api = { SIGNS, RASHI, NAKSHATRAS, NAME, ORDER, SIGN_LORD, julianDay, jdFromMs, ayanamsa, positions, ascendant,
+                  natal, dasha, dignity, cosmicScore, daily, moonLon, sunLon, DASHA, YEAR_MS, norm, angDiff };
+    return api;
+  })();
+  if (typeof module !== "undefined" && module.exports) module.exports = Astro;
+  
+
+  // ---------- Cosmic profile: runs entirely in the browser ----------
+  const SIGNS = Astro.SIGNS;
+  const REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ----- small gazetteer (all places use IST, UTC+5:30) -----
+  const PLACES = [
+    ["Delhi","Delhi",28.6139,77.2090],["Mumbai","Maharashtra",19.0760,72.8777],["Bengaluru","Karnataka",12.9716,77.5946],
+    ["Chennai","Tamil Nadu",13.0827,80.2707],["Kolkata","West Bengal",22.5726,88.3639],["Hyderabad","Telangana",17.3850,78.4867],
+    ["Pune","Maharashtra",18.5204,73.8567],["Ahmedabad","Gujarat",23.0225,72.5714],["Jaipur","Rajasthan",26.9124,75.7873],
+    ["Lucknow","Uttar Pradesh",26.8467,80.9462],["Kanpur","Uttar Pradesh",26.4499,80.3319],["Nagpur","Maharashtra",21.1458,79.0882],
+    ["Indore","Madhya Pradesh",22.7196,75.8577],["Bhopal","Madhya Pradesh",23.2599,77.4126],["Patna","Bihar",25.5941,85.1376],
+    ["Chandigarh","Chandigarh",30.7333,76.7794],["Ludhiana","Punjab",30.9010,75.8573],["Amritsar","Punjab",31.6340,74.8723],
+    ["Jalandhar","Punjab",31.3260,75.5762],["Patiala","Punjab",30.3398,76.3869],["Rohtak","Haryana",28.8955,76.6066],
+    ["Gurugram","Haryana",28.4595,77.0266],["Faridabad","Haryana",28.4089,77.3178],["Panipat","Haryana",29.3909,76.9635],
+    ["Karnal","Haryana",29.6857,76.9905],["Ambala","Haryana",30.3782,76.7767],["Hisar","Haryana",29.1492,75.7217],
+    ["Sonipat","Haryana",28.9288,77.0913],["Bhiwani","Haryana",28.7930,76.1322],["Jind","Haryana",29.3160,76.3150],
+    ["Rewari","Haryana",28.1930,76.6170],["Sirsa","Haryana",29.5340,75.0280],["Kurukshetra","Haryana",29.9695,76.8783],
+    ["Yamunanagar","Haryana",30.1290,77.2674],["Meerut","Uttar Pradesh",28.9845,77.7064],["Ghaziabad","Uttar Pradesh",28.6692,77.4538],
+    ["Noida","Uttar Pradesh",28.5355,77.3910],["Agra","Uttar Pradesh",27.1767,78.0081],["Varanasi","Uttar Pradesh",25.3176,82.9739],
+    ["Prayagraj","Uttar Pradesh",25.4358,81.8463],["Gorakhpur","Uttar Pradesh",26.7606,83.3732],["Bareilly","Uttar Pradesh",28.3670,79.4304],
+    ["Moradabad","Uttar Pradesh",28.8386,78.7733],["Aligarh","Uttar Pradesh",27.8974,78.0880],["Mathura","Uttar Pradesh",27.4924,77.6737],
+    ["Saharanpur","Uttar Pradesh",29.9680,77.5460],["Jhansi","Uttar Pradesh",25.4484,78.5685],["Ayodhya","Uttar Pradesh",26.7922,82.1998],
+    ["Dehradun","Uttarakhand",30.3165,78.0322],["Haridwar","Uttarakhand",29.9457,78.1642],["Shimla","Himachal Pradesh",31.1048,77.1734],
+    ["Jammu","Jammu and Kashmir",32.7266,74.8570],["Srinagar","Jammu and Kashmir",34.0837,74.7973],["Ranchi","Jharkhand",23.3441,85.3096],
+    ["Jamshedpur","Jharkhand",22.8046,86.2029],["Dhanbad","Jharkhand",23.7957,86.4304],["Bhubaneswar","Odisha",20.2961,85.8245],
+    ["Cuttack","Odisha",20.4625,85.8830],["Raipur","Chhattisgarh",21.2514,81.6296],["Bilaspur","Chhattisgarh",22.0797,82.1409],
+    ["Bhilai","Chhattisgarh",21.1938,81.3509],["Guwahati","Assam",26.1445,91.7362],["Shillong","Meghalaya",25.5788,91.8933],
+    ["Imphal","Manipur",24.8170,93.9368],["Agartala","Tripura",23.8315,91.2868],["Aizawl","Mizoram",23.7271,92.7176],
+    ["Kohima","Nagaland",25.6751,94.1086],["Gangtok","Sikkim",27.3389,88.6065],["Itanagar","Arunachal Pradesh",27.0844,93.6053],
+    ["Siliguri","West Bengal",26.7271,88.3953],["Asansol","West Bengal",23.6739,86.9524],["Gaya","Bihar",24.7914,85.0002],
+    ["Muzaffarpur","Bihar",26.1209,85.3647],["Surat","Gujarat",21.1702,72.8311],["Vadodara","Gujarat",22.3072,73.1812],
+    ["Rajkot","Gujarat",22.3039,70.8022],["Jodhpur","Rajasthan",26.2389,73.0243],["Udaipur","Rajasthan",24.5854,73.7125],
+    ["Kota","Rajasthan",25.2138,75.8648],["Ajmer","Rajasthan",26.4499,74.6399],["Bikaner","Rajasthan",28.0229,73.3119],
+    ["Gwalior","Madhya Pradesh",26.2183,78.1828],["Jabalpur","Madhya Pradesh",23.1815,79.9864],["Ujjain","Madhya Pradesh",23.1765,75.7885],
+    ["Nashik","Maharashtra",19.9975,73.7898],["Aurangabad","Maharashtra",19.8762,75.3433],["Solapur","Maharashtra",17.6599,75.9064],
+    ["Kolhapur","Maharashtra",16.7050,74.2433],["Thane","Maharashtra",19.2183,72.9781],["Navi Mumbai","Maharashtra",19.0330,73.0297],
+    ["Panaji","Goa",15.4909,73.8278],["Mangaluru","Karnataka",12.9141,74.8560],["Mysuru","Karnataka",12.2958,76.6394],
+    ["Hubballi","Karnataka",15.3647,75.1240],["Belagavi","Karnataka",15.8497,74.4977],["Kalaburagi","Karnataka",17.3297,76.8343],
+    ["Tumakuru","Karnataka",13.3379,77.1173],["Madhugiri","Karnataka",13.6604,77.2114],["Coimbatore","Tamil Nadu",11.0168,76.9558],
+    ["Madurai","Tamil Nadu",9.9252,78.1198],["Tiruchirappalli","Tamil Nadu",10.7905,78.7047],["Salem","Tamil Nadu",11.6643,78.1460],
+    ["Tirunelveli","Tamil Nadu",8.7139,77.7567],["Vellore","Tamil Nadu",12.9165,79.1325],["Puducherry","Puducherry",11.9416,79.8083],
+    ["Kanyakumari","Tamil Nadu",8.0883,77.5385],["Kochi","Kerala",9.9312,76.2673],["Thiruvananthapuram","Kerala",8.5241,76.9366],
+    ["Kozhikode","Kerala",11.2588,75.7804],["Thrissur","Kerala",10.5276,76.2144],["Visakhapatnam","Andhra Pradesh",17.6868,83.2185],
+    ["Vijayawada","Andhra Pradesh",16.5062,80.6480],["Guntur","Andhra Pradesh",16.3067,80.4365],["Tirupati","Andhra Pradesh",13.6288,79.4192],
+    ["Nellore","Andhra Pradesh",14.4426,79.9865],["Kurnool","Andhra Pradesh",15.8281,78.0373],["Warangal","Telangana",17.9689,79.5941]
+  ];
+  const ALIASES = { "bangalore":"bengaluru","bombay":"mumbai","calcutta":"kolkata","madras":"chennai","trivandrum":"thiruvananthapuram",
+    "mysore":"mysuru","poona":"pune","baroda":"vadodara","gurgaon":"gurugram","allahabad":"prayagraj","benares":"varanasi",
+    "new delhi":"delhi","cochin":"kochi","vizag":"visakhapatnam","mangalore":"mangaluru","trichy":"tiruchirappalli","pondicherry":"puducherry" };
+  const nrm = s => String(s).toLowerCase().replace(/\s+/g, " ").trim();
+  const placeMap = new Map();
+  PLACES.forEach(p => { placeMap.set(nrm(p[0] + ", " + p[1]), p); if (!placeMap.has(nrm(p[0]))) placeMap.set(nrm(p[0]), p); });
+  document.getElementById("cityList").innerHTML = PLACES.map(p => '<option value="' + p[0] + ', ' + p[1] + '"></option>').join("");
+  function findPlace(text) {
+    const t = nrm(text).replace(/,?\s*india$/, "");
+    if (placeMap.has(t)) return placeMap.get(t);
+    const city = t.split(",")[0].trim(), a = ALIASES[city] || city;
+    if (placeMap.has(a)) return placeMap.get(a);
+    const hits = PLACES.filter(p => nrm(p[0]).startsWith(a));
+    return a.length >= 3 && hits.length === 1 ? hits[0] : null;
+  }
+
+  // ----- North Indian kundli (houses fixed, signs rotate from the Lagna) -----
+  const housePos = {
+    1: [150, 50], 12: [205, 65], 11: [235, 100], 10: [245, 150], 9: [235, 200], 8: [205, 235],
+    7: [150, 250], 6: [95, 235], 5: [65, 200], 4: [55, 150], 3: [65, 100], 2: [95, 65]
+  };
+  function renderKundli(c, targetId) {
+    const wrap = document.getElementById(targetId || "kundli");
+    const byHouse = {};
+    c.planets.forEach(p => { (byHouse[p.house] = byHouse[p.house] || []).push((LANG === "hi" ? PLANET_HI_SHORT[p.name] : p.name) + (p.retro && p.id !== "rahu" && p.id !== "ketu" ? (LANG === "hi" ? " (व)" : " (R)") : "")); });
+    let labels = "";
+    for (let h = 1; h <= 12; h++) {
+      const sign = SIGNS[(c.asc.sign + h - 1) % 12], [x, y] = housePos[h], isAsc = h === 1;
+      labels += '<text x="' + x + '" y="' + (y - 20) + '" text-anchor="middle" class="kundli-num">' + h + '</text>';
+      labels += '<text x="' + x + '" y="' + (y - 8) + '" text-anchor="middle" class="' + (isAsc ? "kundli-asc-label" : "kundli-sign") + '">' + (LANG === "hi" ? RASHI_HI[(c.asc.sign + h - 1) % 12] : sign.slice(0, 3)) + (isAsc ? (LANG === "hi" ? " · लग्न" : " · Lagna") : "") + '</text>';
+      (byHouse[h] || []).forEach((pl, i) => { labels += '<text x="' + x + '" y="' + (y + 8 + i * 13) + '" text-anchor="middle" class="kundli-planets">' + pl + '</text>'; });
+    }
+    const petal = (cx, cy, rot) => {
+      const h = 8, w = 5;
+      return '<path d="M 0,' + (-h) + ' Q ' + w + ',' + (-h * 0.4) + ' ' + w + ',0 Q ' + w + ',' + (h * 0.4) + ' 0,' + h + ' Q ' + (-w) + ',' + (h * 0.4) + ' ' + (-w) + ',0 Q ' + (-w) + ',' + (-h * 0.4) + ' 0,' + (-h) + ' Z" class="kundli-petal" transform="translate(' + cx + ',' + cy + ') rotate(' + rot + ')"/>';
+    };
+    wrap.innerHTML = '<svg viewBox="0 0 300 300" role="img"><title>North Indian style Rasi chart (D1)</title>' +
+      '<desc>Traditional kundli with houses numbered 1 to 12 anticlockwise from the top. Lagna in ' + SIGNS[c.asc.sign] + '.</desc>' +
+      '<rect x="1" y="1" width="298" height="298" class="kundli-border-outer"/><rect x="10" y="10" width="280" height="280" class="kundli-outer"/>' +
+      '<line x1="10" y1="10" x2="290" y2="290" class="kundli-line"/><line x1="290" y1="10" x2="10" y2="290" class="kundli-line"/>' +
+      '<line x1="10" y1="150" x2="290" y2="150" class="kundli-line"/><line x1="150" y1="10" x2="150" y2="290" class="kundli-line"/>' +
+      petal(150, 10, 0) + petal(150, 290, 0) + petal(10, 150, 90) + petal(290, 150, 90) + labels + '</svg>';
+  }
+
+  // ----- score rings -----
+  const RC = 2 * Math.PI * 52;
+  function ringHTML(id, label) {
+    return '<svg class="ring" viewBox="0 0 120 120" role="img" aria-label="' + label + '"><defs><linearGradient id="' + id + 'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB25A"/><stop offset="1" stop-color="#A32828"/></linearGradient></defs>' +
+      '<circle class="track" cx="60" cy="60" r="52"/><circle class="prog" id="' + id + 'p" cx="60" cy="60" r="52" stroke="url(#' + id + 'g)" stroke-dasharray="' + RC.toFixed(2) + '" style="stroke-dashoffset:' + RC.toFixed(2) + '" transform="rotate(-90 60 60)"/>' +
+      '<text class="n" id="' + id + 'n" x="60" y="66">0</text><text class="d" x="60" y="82">' + T("out of 100", "100 में से") + '</text></svg>';
+  }
+  function animateRing(id, score) {
+    const p = document.getElementById(id + "p"), n = document.getElementById(id + "n");
+    if (!p || !n) return;
+    const off = (RC * (1 - score / 100)).toFixed(2);
+    if (REDUCE) { p.style.transition = "none"; p.style.strokeDashoffset = off; n.textContent = score; return; }
+    requestAnimationFrame(() => requestAnimationFrame(() => { p.style.strokeDashoffset = off; }));
+    const t0 = performance.now();
+    (function tick(now) { const k = Math.min(1, (now - t0) / 1000); n.textContent = Math.round(score * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0);
+  }
+  const esc = s => String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  const fmtMonth = ms => new Date(ms).toLocaleDateString("en-IN", { month: "short", year: "numeric" });
+  const BAND_COPY = {
+    Radiant: "Your chart carries exceptional planetary strength. Your dignified planets support you well.",
+    Strong: "Most of your planets sit comfortably. You have solid foundations to build on.",
+    Balanced: "A mix of strong and tender placements. Effort in the right areas brings steady results.",
+    Developing: "Several planets are asking for patience. Growth comes through steady, conscious effort.",
+    Tender: "Your chart asks for care and patience. Its lessons sit in the areas marked below."
+  };
+
+  // ---------- Language (English / Hindi) ----------
+  let LANG = "en";
+  try { if (localStorage.getItem("c11lang") === "hi") LANG = "hi"; } catch (e) {}
+  const T = (en, hi) => (LANG === "hi" ? hi : en);
+  const RASHI_HI = ["मेष","वृषभ","मिथुन","कर्क","सिंह","कन्या","तुला","वृश्चिक","धनु","मकर","कुंभ","मीन"];
+  const PLANET_HI = { Sun:"सूर्य", Moon:"चंद्र", Mars:"मंगल", Mercury:"बुध", Jupiter:"गुरु", Venus:"शुक्र", Saturn:"शनि", Rahu:"राहु", Ketu:"केतु" };
+  const PLANET_HI_SHORT = { Sun:"सू", Moon:"चं", Mars:"मं", Mercury:"बु", Jupiter:"गु", Venus:"शु", Saturn:"श", Rahu:"रा", Ketu:"के" };
+  const NAK_HI = ["अश्विनी","भरणी","कृत्तिका","रोहिणी","मृगशिरा","आर्द्रा","पुनर्वसु","पुष्य","आश्लेषा","मघा","पूर्वा फाल्गुनी","उत्तरा फाल्गुनी","हस्त","चित्रा","स्वाती","विशाखा","अनुराधा","ज्येष्ठा","मूल","पूर्वाषाढ़ा","उत्तराषाढ़ा","श्रवण","धनिष्ठा","शतभिषा","पूर्वा भाद्रपद","उत्तरा भाद्रपद","रेवती"];
+  const DIG_HI = { "Exalted":"उच्च", "Debilitated":"नीच", "Moolatrikona":"मूलत्रिकोण", "Own sign":"स्वराशि", "Friend's sign":"मित्र राशि", "Enemy's sign":"शत्रु राशि", "Neutral sign":"सम राशि", "Debilitated, cancelled":"नीचभंग (नीचता रद्द)" };
+  const BAND_HI = { Radiant:"उत्कृष्ट", Strong:"मज़बूत", Balanced:"संतुलित", Developing:"विकासशील", Tender:"कोमल" };
+  const TARA_HI = { "Janma":"जन्म", "Sampat":"संपत", "Vipat":"विपत", "Kshema":"क्षेम", "Pratyari":"प्रत्यरि", "Sadhaka":"साधक", "Vadha":"वध", "Mitra":"मित्र", "Ati-Mitra":"अति-मित्र" };
+  const FOCUS_HI = { 1:"आज आपका शरीर और मन मुख्य विषय हैं। आराम, भोजन और विश्राम का ध्यान रखें।", 2:"आज धन और वाणी पर ध्यान दें। खर्च पर नज़र रखें और सोच-समझकर बोलें।", 3:"साहस और प्रयास का फल मिलेगा। पहल करें, संपर्क बढ़ाएँ और अधूरे काम पूरे करें।", 4:"मन की शांति कुछ कम हो सकती है। घर पर चीज़ें सरल रखें और अनावश्यक यात्रा से बचें।", 5:"योजनाओं में छोटी रुकावटें आ सकती हैं। धैर्य रखें और महत्वपूर्ण निर्णयों में जल्दबाज़ी न करें।", 6:"विरोधियों से निपटने, स्वास्थ्य दिनचर्या और अधूरे काम के लिए अच्छा दिन। प्रयास सफल होंगे।", 7:"संबंध और साझेदारी अनुकूल हैं। बैठकों, बातचीत और आनंद के लिए अच्छा दिन।", 8:"स्वास्थ्य, धन और जोखिम भरे कदमों में सावधानी रखें। धीमे चलें और बातों की दोबारा जाँच करें।", 9:"प्रगति धीमी लग सकती है। परिणाम पर ज़ोर न डालें, अनुभव और सलाह का सहारा लें।", 10:"करियर और ज़िम्मेदारियाँ चमकेंगी। महत्वपूर्ण कार्य करने के लिए अच्छा दिन।", 11:"लाभ और इच्छाओं की पूर्ति के संकेत हैं। नेटवर्किंग, आय और लक्ष्यों के लिए अच्छा दिन।", 12:"खर्च और बेचैनी बढ़ सकती है। जोखिम से बचें, अच्छी नींद लें और खर्च पर नियंत्रण रखें।" };
+  const HEADLINE_HI = s => s >= 75 ? "एक उज्ज्वल, सहायक दिन। गति आपके साथ है।" : s >= 60 ? "एक स्थिर, अनुकूल दिन, कुछ बातों पर ध्यान रखें।" : s >= 45 ? "मिला-जुला दिन। कदम-दर-कदम चलें और बड़े निर्णयों में जल्दबाज़ी न करें।" : s >= 30 ? "धीमा दिन। अपनी ऊर्जा बचाएँ और योजनाएँ सरल रखें।" : "स्वयं के प्रति कोमल रहें। जोखिम और टकराव से बचें।";
+  const BAND_COPY_HI = { Radiant:"आपकी कुंडली में असाधारण ग्रह बल है। आपके शुभ ग्रह आपका भरपूर साथ देते हैं।", Strong:"अधिकांश ग्रह आरामदायक स्थिति में हैं। आपके पास आगे बढ़ने की ठोस नींव है।", Balanced:"मज़बूत और कोमल स्थितियों का मिश्रण। सही क्षेत्रों में प्रयास से स्थिर परिणाम मिलते हैं।", Developing:"कई ग्रह धैर्य माँगते हैं। विकास निरंतर, सजग प्रयास से आता है।", Tender:"आपकी कुंडली धैर्य और देखभाल माँगती है। इसके पाठ नीचे दिखाए गए क्षेत्रों में हैं।" };
+  const pn = n => (LANG === "hi" ? PLANET_HI[n] || n : n);
+  const rashiName = i => (LANG === "hi" ? RASHI_HI[i] : Astro.RASHI[i] + " (" + SIGNS[i] + ")");
+  const nakName = i => (LANG === "hi" ? NAK_HI[i] : Astro.NAKSHATRAS[i]);
+  const locale = () => (LANG === "hi" ? "hi-IN" : "en-IN");
+  let lastInp = null;
+
+  // ----- render everything for one person -----
+  function renderProfile(inp, opts) {
+    opts = opts || {};
+    lastInp = inp;
+    const chart = Astro.natal({ year: inp.y, month: inp.m, day: inp.d, hour: inp.hh, minute: inp.mm, tz: inp.tz, lat: inp.lat, lon: inp.lon });
+    const birthMs = Date.UTC(inp.y, inp.m - 1, inp.d, inp.hh, inp.mm) - inp.tz * 3600000;
+    const now = Date.now();
+    const dasha = Astro.dasha(chart, birthMs, now), score = Astro.cosmicScore(chart), day = Astro.daily(chart, now);
+    const moon = chart.byId.moon, lord = Astro.NAME[Astro.SIGN_LORD[moon.sign]];
+    const fmtM = ms => new Date(ms).toLocaleDateString(locale(), { month: "short", year: "numeric" });
+
+    document.getElementById("idCard").innerHTML =
+      '<p class="greet">' + T("Namaste, ", "नमस्ते, ") + esc(inp.name) + '</p>' +
+      '<div class="stat-grid">' +
+      '<div class="stat"><div class="k">' + T("Your Rashi (Moon sign)", "आपकी राशि (चंद्र राशि)") + '</div><div class="v">' + rashiName(moon.sign) + '</div><div class="s">' + T("Ruled by ", "स्वामी: ") + pn(lord) + '</div></div>' +
+      '<div class="stat"><div class="k">' + T("Your Nakshatra", "आपका नक्षत्र") + '</div><div class="v">' + nakName(moon.nak) + '</div><div class="s">' + T("Pada ", "पद ") + moon.pada + '</div></div>' +
+      '<div class="stat"><div class="k">' + T("Your Lagna (rising)", "आपका लग्न") + '</div><div class="v">' + rashiName(chart.asc.sign) + '</div><div class="s">' + chart.asc.deg.toFixed(1) + '° ' + nakName(chart.asc.nak) + '</div></div></div>' +
+      '<p class="dasha-line">' + T('Running now: <b>' + dasha.lord + ' Mahadasha</b> until ' + fmtM(dasha.end) + ' &middot; <b>' + dasha.antar.lord + ' Antardasha</b> until ' + fmtM(dasha.antar.end) + '.',
+                                  'अभी चल रहा है: <b>' + pn(dasha.lord) + ' महादशा</b> ' + fmtM(dasha.end) + ' तक &middot; <b>' + pn(dasha.antar.lord) + ' अंतर्दशा</b> ' + fmtM(dasha.antar.end) + ' तक।') + '</p>' +
+      '<p class="fine">' + T("Born in ", "जन्म स्थान: ") + esc(inp.label) + '</p>';
+
+    const rows = score.rows.map(r => {
+      const flags = (r.retro ? '<span class="flag">' + T("Retrograde", "वक्री") + '</span>' : '') + (r.combust ? '<span class="flag">' + T("Combust", "अस्त") + '</span>' : '') + (r.lagnaLord ? '<span class="flag">' + T("Lagna lord", "लग्नेश") + '</span>' : '');
+      const signTxt = LANG === "hi" ? RASHI_HI[r.sign] : SIGNS[r.sign];
+      return '<div class="pl-row"><div><div class="pl-name">' + pn(r.name) + flags + '</div><div class="pl-meta">' + T(r.label, DIG_HI[r.label] || r.label) + ' &middot; ' + signTxt + ' &middot; ' + T("House ", "भाव ") + r.house + '</div></div>' +
+        '<div class="pl-pts">' + r.score + '</div><div class="bar"><i data-w="' + r.score + '"></i></div></div>';
+    }).join("");
+    document.getElementById("scoreCard").innerHTML =
+      '<h3 class="card-title">' + T("Your Cosmic Score", "आपका कॉस्मिक स्कोर") + '</h3>' +
+      '<div class="score-top">' + ringHTML("rn", T("Cosmic Score ", "कॉस्मिक स्कोर ") + score.score + T(" out of 100", " / 100")) +
+      '<div class="score-copy"><div class="band">' + T(score.band, BAND_HI[score.band]) + '</div><p>' + T(BAND_COPY[score.band], BAND_COPY_HI[score.band]) + '</p></div></div>' +
+      '<div class="pl-list">' + rows + '</div>' +
+      '<details class="how"><summary>' + T("How is this calculated?", "इसकी गणना कैसे होती है?") + '</summary><p>' +
+      T("Each of the seven planets earns points for its dignity (exalted, own sign, friend's sign, down to debilitated, with the Phala Deepika rule that cancels a debilitation) and for the strength of the house it occupies. Combust planets lose points. The Moon and your Lagna lord count a little more. Rahu and Ketu appear in your chart but are not scored. This is Cosmic 11's own summary score, not a classical Shadbala figure.",
+        "सातों ग्रहों को उनकी गरिमा (उच्च, स्वराशि, मित्र राशि से लेकर नीच तक, फलदीपिका के नीचभंग नियम सहित) और उनके भाव की शक्ति के आधार पर अंक मिलते हैं। अस्त ग्रहों के अंक घटते हैं। चंद्रमा और आपके लग्नेश को थोड़ा अधिक महत्व मिलता है। राहु और केतु कुंडली में दिखते हैं पर उन्हें अंक नहीं दिए जाते। यह Cosmic 11 का अपना सारांश स्कोर है, शास्त्रीय षड्बल नहीं।") + '</p></details>';
+
+    renderKundli(chart);
+
+    const dateStr = new Date(now).toLocaleDateString(locale(), { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const gGood = day.gochara.filter(g => g.state === "supportive").length;
+    const mIdx = SIGNS.indexOf(day.moonSign), nIdx = Astro.NAKSHATRAS.indexOf(day.moonNak);
+    const list = arr => arr.map(pn).join(", ");
+    document.getElementById("dailyCard").innerHTML =
+      '<h3 class="card-title">' + T("Your Horoscope Today", "आज का राशिफल") + '</h3>' +
+      '<div class="daily-head">' + ringHTML("rd", T("Today's energy ", "आज की ऊर्जा ") + day.score + T(" out of 100", " / 100")) +
+      '<div><div class="date-line">' + dateStr + '</div><div class="band">' + T(day.band + " energy", BAND_HI[day.band] + " ऊर्जा") + '</div><p class="headline">' + T(day.headline, HEADLINE_HI(day.score)) + '</p></div></div>' +
+      '<p class="focus"><b>' + T("Today's focus:", "आज का ध्यान:") + '</b> ' + T(day.focus, FOCUS_HI[day.moonH]) + '</p>' +
+      '<div class="chips-row">' +
+      '<span class="pill ' + (day.chandra.good ? "good" : "care") + '">' + T("Chandra Bala: Moon in house " + day.chandra.house + " from your Moon", "चंद्र बल: चंद्रमा आपकी चंद्र राशि से " + day.chandra.house + "वें भाव में") + '</span>' +
+      '<span class="pill ' + (day.tara.good ? "good" : day.tara.n === 1 ? "" : "care") + '">' + T("Tara Bala: " + day.tara.name, "तारा बल: " + TARA_HI[day.tara.name]) + '</span>' +
+      '<span class="pill ' + (gGood >= 3 ? "good" : "care") + '">' + T("Planet transits: " + gGood + " of 6 supportive", "ग्रह गोचर: 6 में से " + gGood + " अनुकूल") + '</span></div>' +
+      '<div class="lines">' +
+      '<p><b>' + T("Supportive today:", "आज अनुकूल:") + '</b> ' + (day.supportive.length ? list(day.supportive) : T("none stand out", "कोई विशेष नहीं")) + '.</p>' +
+      '<p><b>' + T("Go slowly with:", "सावधानी रखें:") + '</b> ' + (day.careful.length ? list(day.careful) : T("nothing in particular", "कुछ विशेष नहीं")) + '.</p>' +
+      '<p>' + T("The Moon is in " + day.moonSign + " (" + day.moonNak + ") today.", "आज चंद्रमा " + RASHI_HI[mIdx] + " राशि (" + NAK_HI[nIdx] + ") में है।") + '</p>' +
+      (day.sadeSati ? '<p>' + T("<b>Sade Sati:</b> Saturn is passing near your Moon sign. Steady effort pays; avoid shortcuts.", "<b>साढ़ेसाती:</b> शनि आपकी चंद्र राशि के पास से गुज़र रहा है। निरंतर प्रयास फल देगा; शॉर्टकट से बचें।") + '</p>' : '') + '</div>' +
+      '<details class="how"><summary>' + T("How is this calculated?", "इसकी गणना कैसे होती है?") + '</summary><p>' +
+      T("Chandra Bala checks where today's Moon stands from your birth Moon. Tara Bala counts from your birth nakshatra to today's. Planet transits check Sun, Mars, Mercury, Jupiter, Venus and Saturn from your Moon against the favourable houses in the Phala Deepika transit chapter, including Vedha (obstruction). The three are blended into one score.",
+        "चंद्र बल देखता है कि आज का चंद्रमा आपके जन्म चंद्रमा से किस भाव में है। तारा बल आपके जन्म नक्षत्र से आज के नक्षत्र तक गिनता है। ग्रह गोचर में सूर्य, मंगल, बुध, गुरु, शुक्र और शनि को आपकी चंद्र राशि से फलदीपिका के गोचर अध्याय के शुभ भावों (वेध सहित) से मिलाया जाता है। तीनों को मिलाकर एक स्कोर बनता है।") + '</p></details>';
+
+    document.getElementById("engineNote").textContent = T(
+      "Positions are calculated in your browser with the Lahiri ayanamsa. Tested against Swiss Ephemeris on 400 random birth charts: Moon within 0.01 degrees, Sun and Lagna within 0.02, Jupiter and Saturn within 0.2. Readings from the classical texts use the full Swiss Ephemeris engine.",
+      "ग्रह स्थितियाँ आपके ब्राउज़र में लाहिड़ी अयनांश से गणना की जाती हैं। 400 यादृच्छिक जन्म कुंडलियों पर स्विस एफेमेरिस से जाँच: चंद्रमा 0.01 अंश के भीतर, सूर्य और लग्न 0.02 के भीतर, गुरु और शनि 0.2 के भीतर। शास्त्रीय ग्रंथों से उत्तर पूर्ण स्विस एफेमेरिस इंजन का उपयोग करते हैं।");
+
+    const res = document.getElementById("results");
+    res.hidden = false;
+    animateRing("rn", score.score); animateRing("rd", day.score);
+    requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll(".bar i[data-w]").forEach(b => { b.style.width = b.dataset.w + "%"; })));
+    if (REDUCE) document.querySelectorAll(".bar i[data-w]").forEach(b => { b.style.transition = "none"; b.style.width = b.dataset.w + "%"; });
+    if (opts.scroll !== false) res.scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "start" });
+    return { chart, score, day, dasha };
+  }
+
+  // ----- form handling -----
+  const el = id => document.getElementById(id);
+  el("bdate").max = new Date().toISOString().slice(0, 10);
+  function readForm() {
+    const name = el("bname").value.trim() || T("Friend", "मित्र");
+    if (!el("bdate").value) return { error: T("Please choose your date of birth.", "कृपया जन्म तिथि चुनें।") };
+    if (!el("btime").value) return { error: T("Please add your time of birth. An approximate time is fine, but your Lagna depends on it.", "कृपया जन्म समय भरें। अनुमानित समय भी चलेगा, पर लग्न इसी पर निर्भर करता है।") };
+    const [y, m, d] = el("bdate").value.split("-").map(Number), [hh, mm] = el("btime").value.split(":").map(Number);
+    if (!(y >= 1900) || Date.UTC(y, m - 1, d) > Date.now()) return { error: T("Please check the date of birth.", "कृपया जन्म तिथि जाँचें।") };
+    let lat, lon, tz, label;
+    const manual = el("mlat").value.trim() !== "" || el("mlon").value.trim() !== "";
+    if (manual) {
+      lat = parseFloat(el("mlat").value); lon = parseFloat(el("mlon").value); tz = el("mtz").value.trim() === "" ? 5.5 : parseFloat(el("mtz").value);
+      if (![lat, lon, tz].every(isFinite) || Math.abs(lat) > 90 || Math.abs(lon) > 180 || Math.abs(tz) > 14) return { error: T("Please check the coordinates and time zone.", "कृपया निर्देशांक और समय क्षेत्र जाँचें।"), openCoords: true };
+      label = el("bplace").value.trim() || (lat.toFixed(2) + ", " + lon.toFixed(2));
+    } else {
+      if (!el("bplace").value.trim()) return { error: T("Please enter your place of birth.", "कृपया जन्म स्थान भरें।") };
+      const pl = findPlace(el("bplace").value);
+      if (!pl) return { error: T("We could not find that place. Pick a city from the suggestions, or enter coordinates below.", "यह स्थान नहीं मिला। सुझावों में से शहर चुनें, या नीचे निर्देशांक भरें।"), openCoords: true };
+      lat = pl[2]; lon = pl[3]; tz = 5.5; label = pl[0] + ", " + pl[1];
+    }
+    return { name, y, m, d, hh, mm, lat, lon, tz, label };
+  }
+  window.__c11ready = true;
+  el("birthForm").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const msg = el("formMsg"), inp = readForm();
+    if (inp.error) { msg.textContent = inp.error; if (inp.openCoords) el("coordsBox").open = true; return; }
+    msg.textContent = "";
+    try { renderProfile(inp); }
+    catch (err) { msg.textContent = T("Sorry, something went wrong while showing your profile: ", "क्षमा करें, प्रोफ़ाइल दिखाने में समस्या आई: ") + (err && err.message ? err.message : err); }
+  });
+  window.addEventListener("error", e => { const m = document.getElementById("formMsg"); if (m && !m.textContent) m.textContent = "Page error: " + e.message; });
+  el("exampleBtn").addEventListener("click", () => {
+    el("bname").value = "Harinder Singh"; el("bdate").value = "1969-11-29"; el("btime").value = "05:30";
+    el("bplace").value = "Rohtak, Haryana"; el("mlat").value = ""; el("mlon").value = ""; el("mtz").value = "";
+    if (el("birthForm").requestSubmit) el("birthForm").requestSubmit(); else el("profileBtn").click();
+  });
+
+  // ---------- Static text in both languages ----------
+  const STATIC = [
+    ["#profile .block-title", "Discover Your Cosmic Profile", "अपनी ब्रह्मांडीय प्रोफ़ाइल जानें"],
+    ["#profile .block-sub", "Enter your birth details to see your Rashi, your Cosmic Score and today's personal horoscope. It is calculated instantly on your phone.", "अपनी राशि, कॉस्मिक स्कोर और आज का व्यक्तिगत राशिफल देखने के लिए जन्म विवरण भरें। गणना तुरंत आपके फ़ोन पर होती है।"],
+    ["label[for=bname]", "Your name", "आपका नाम"], ["label[for=bdate]", "Date of birth", "जन्म तिथि"],
+    ["label[for=btime]", "Time of birth", "जन्म समय"], ["label[for=bplace]", "Place of birth", "जन्म स्थान"],
+    ["#coordsBox summary", "Place not in the list? Enter coordinates", "स्थान सूची में नहीं है? निर्देशांक भरें"],
+    ["label[for=mlat]", "Latitude", "अक्षांश"], ["label[for=mlon]", "Longitude", "देशांतर"],
+    ["label[for=mtz]", "Time zone (hours from UTC)", "समय क्षेत्र (UTC से घंटे)"],
+    ["#profileBtn", "Reveal My Cosmic Profile", "मेरी ब्रह्मांडीय प्रोफ़ाइल दिखाएँ"], ["#exampleBtn", "Try an example", "उदाहरण देखें"],
+    ["#birthForm > .fine", "Times are read as Indian Standard Time (UTC+5:30) for places in India. Lahiri ayanamsa, whole-sign houses.", "भारत के स्थानों के लिए समय भारतीय मानक समय (UTC+5:30) माना जाता है। लाहिड़ी अयनांश, संपूर्ण राशि भाव।"],
+    ["#chartCard .card-title", "Your Kundli", "आपकी कुंडली"],
+    ["#chartCard .fine", "Rasi chart (D1). Houses count anticlockwise from your Lagna at the top.", "राशि कुंडली (D1)। भाव ऊपर लग्न से वामावर्त गिने जाते हैं।"],
+    ["#askTitle", "Ask the Classical Texts", "शास्त्रीय ग्रंथों से पूछें"],
+    ["#askSub", "Choose a topic. Your answer is built from your own chart, your dasha periods and planet transits, and the classical texts. Every answer names its source, and says honestly when the books do not cover something.", "एक विषय चुनें। आपका उत्तर आपकी अपनी कुंडली, दशा, ग्रह गोचर और शास्त्रीय ग्रंथों से बनता है। हर उत्तर अपना स्रोत बताता है, और जहाँ ग्रंथ कुछ नहीं कहते, वहाँ ईमानदारी से यही बताता है।"],
+    ["[data-topic=marriage] span", "Marriage timing", "विवाह का समय"], ["[data-topic=career] span", "Career & job", "करियर और नौकरी"],
+    ["[data-topic=money] span", "Money", "धन"], ["#ownQ summary", "Or ask your own question", "या अपना प्रश्न पूछें"],
+    ["#heroH1", "Your birth chart, explained in plain words.", "आपकी जन्म कुंडली, सरल शब्दों में।"],
+    ["#heroSub", "Free Rashi, Cosmic Score and daily horoscope. Every answer names the classical book it comes from, and says so when the books are silent.", "मुफ़्त राशि, कॉस्मिक स्कोर और रोज़ का राशिफल। हर उत्तर उस शास्त्रीय ग्रंथ का नाम बताता है जिससे वह आया है, और ग्रंथ मौन हों तो यह भी साफ़ कहता है।"],
+    ["#tr1", "Free to start", "शुरुआत मुफ़्त"],
+    ["#tr2", "Every answer cites its book", "हर उत्तर में ग्रंथ का नाम"],
+    ["#tr3", "No fear, no fake claims", "न डर, न झूठे दावे"],
+    ["#boardTitle", "What you get, free", "मुफ़्त में आपको क्या मिलता है"],
+    ["#boardSub", "Everything below is calculated from your own birth details.", "नीचे सब कुछ आपके अपने जन्म विवरण से गणना होता है।"],
+    ["#tl1h", "Your Rashi and Nakshatra", "आपकी राशि और नक्षत्र"],
+    ["#tl1p", "Your Moon sign, birth star and Lagna, with the ruling planet of each.", "आपकी चंद्र राशि, जन्म नक्षत्र और लग्न, हर एक के स्वामी ग्रह के साथ।"],
+    ["#tl2h", "Cosmic Score", "कॉस्मिक स्कोर"],
+    ["#tl2p", "One number out of 100 for the strength of your planets, with the reason for each.", "आपके ग्रहों की शक्ति का 100 में एक अंक, हर ग्रह के कारण सहित।"],
+    ["#tl3h", "Today's horoscope", "आज का राशिफल"],
+    ["#tl3p", "A fresh reading every day, from where the Moon and planets stand against your chart.", "हर दिन नया फल, आपकी कुंडली के सामने चंद्रमा और ग्रहों की स्थिति से।"],
+    ["#tl4h", "Your Kundli chart", "आपकी कुंडली"],
+    ["#tl4p", "The classic North Indian chart, drawn for you.", "उत्तर भारतीय शैली की कुंडली, आपके लिए बनी।"],
+    ["#tl5h", "Every answer names its book", "हर उत्तर में ग्रंथ का नाम"],
+    ["#tl5p", "Brihat Jataka, Brihat Samhita and Phala Deepika. When they are silent, we say so.", "बृहत् जातक, बृहत् संहिता और फलदीपिका। जब वे मौन हों, हम साफ़ कह देते हैं।"],
+    ["#tl6h", "A year, month by month", "एक साल, महीने-दर-महीने"],
+    ["#tl6p", "A guidance report in plain words, with key dates and a Jupiter and Saturn timeline.", "सरल शब्दों में मार्गदर्शन रिपोर्ट, मुख्य तिथियों और गुरु-शनि की समय-रेखा के साथ।"],
+    ["#patienceAsk", "Please be patient. Each answer is calculated carefully from your own chart and the classical texts, and it can take up to a minute. For correct results, please do not close or refresh the page while it works.", "कृपया धैर्य रखें। हर उत्तर आपकी कुंडली और शास्त्रीय ग्रंथों से ध्यानपूर्वक गणना करके बनता है, इसमें एक मिनट तक लग सकता है। सही परिणाम के लिए काम के दौरान पेज बंद या रीफ़्रेश न करें।"],
+    ["#patienceRep", "Please be patient. Your report is calculated month by month and checked against your chart, so it takes a few minutes. A correct report is worth the wait. Keep this page open and do not refresh it.", "कृपया धैर्य रखें। आपकी रिपोर्ट महीने-दर-महीने गणना करके आपकी कुंडली से जाँची जाती है, इसलिए इसमें कुछ मिनट लगते हैं। सही रिपोर्ट इंतज़ार के लायक है। पेज खुला रखें और रीफ़्रेश न करें।"],
+    ["#askBtn", "Ask", "पूछें"],
+    ["#lnkPrivacy", "Privacy", "गोपनीयता"], ["#lnkTerms", "Terms, disclaimer & refunds", "शर्तें, अस्वीकरण और रिफ़ंड"], ["#lnkSource", "Source code", "सोर्स कोड"],
+    ["#footNote", "Swiss Ephemeris Inside. Readings are for reflection, not professional advice.", "Swiss Ephemeris Inside। उत्तर चिंतन के लिए हैं, पेशेवर सलाह नहीं।"], ["#factsBox summary", "Calculated timeline used for this answer", "इस उत्तर में उपयोग की गई गणना की समय-रेखा"],
+  ];
+  const PRICE_INR = 29;
+  const priceText = () => T("Free during beta. After launch: \u20b9" + PRICE_INR + " per question, always shown before you ask. No subscriptions, no per-minute charges.",
+                            "बीटा के दौरान निःशुल्क। लॉन्च के बाद: \u20b9" + PRICE_INR + " प्रति प्रश्न, पूछने से पहले हमेशा दिखाया जाएगा। कोई सब्सक्रिप्शन नहीं, कोई प्रति-मिनट शुल्क नहीं।");
+  function applyLanguage() {
+    document.documentElement.lang = LANG === "hi" ? "hi" : "en";
+    STATIC.forEach(([sel, en, hi]) => { const n = document.querySelector(sel); if (n) n.textContent = T(en, hi); });
+    el("bplace").placeholder = T("Start typing your city", "अपना शहर लिखना शुरू करें");
+    el("question").placeholder = T("e.g. How does my Saturn placement affect my career?", "जैसे: मेरा शनि मेरे करियर को कैसे प्रभावित करता है?");
+    el("priceNote").textContent = priceText();
+    el("langBtn").textContent = LANG === "hi" ? "English" : "हिंदी";
+    el("langBtn").setAttribute("aria-label", LANG === "hi" ? "Switch to English" : "हिंदी में देखें");
+    if (lastInp) renderProfile(lastInp, { scroll: false });
+  }
+  el("langBtn").addEventListener("click", () => {
+    LANG = LANG === "hi" ? "en" : "hi";
+    try { localStorage.setItem("c11lang", LANG); } catch (e) {}
+    applyLanguage();
+  });
+
+  // ---------- Ask the classical texts (calls the backend on the same address) ----------
+  const pad = n => String(n).padStart(2, "0");
+  function mdToHtml(text) {
+    const lines = esc(text).split("\n"), out = [];
+    let list = false, table = [];
+    const inline = s => s.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/(^|\s)\*(\S[^*]*\S)\*(?=\s|$)/g, "$1<i>$2</i>");
+    const flushTable = () => { if (table.length) { out.push('<pre class="tbl">' + table.join("\n") + "</pre>"); table = []; } };
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (line.startsWith("|")) { if (list) { out.push("</ul>"); list = false; } table.push(line); continue; }
+      flushTable();
+      if (/^[-*•]\s+/.test(line)) { if (!list) { out.push("<ul>"); list = true; } out.push("<li>" + inline(line.replace(/^[-*•]\s+/, "")) + "</li>"); continue; }
+      if (list) { out.push("</ul>"); list = false; }
+      if (/^#{1,4}\s+/.test(line)) { out.push("<h4>" + inline(line.replace(/^#{1,4}\s+/, "")) + "</h4>"); continue; }
+      if (/^-{3,}$/.test(line)) { out.push("<hr>"); continue; }
+      if (line) out.push("<p>" + inline(line) + "</p>");
+    }
+    flushTable(); if (list) out.push("</ul>");
+    let html = out.join("");
+    if (html.startsWith("<p><b>In short") || html.startsWith("<p><b>संक्षेप में")) html = html.replace("<p>", '<p class="inshort">');
+    return html;
+  }
+  // ---------- Timeline chart: when Jupiter and Saturn are supportive, and the running sub-periods ----------
+  function timelineHTML(tl, title) {
+    if (!tl || !tl.lanes || !tl.lanes.length) return "";
+    const W = 340, left = 64, right = 6, barW = W - left - right, top = 22, laneH = 24, gap = 8;
+    const t0 = Date.parse(tl.start), t1 = Date.parse(tl.end), span = Math.max(1, t1 - t0);
+    const X = t => left + barW * (Math.min(Math.max(Date.parse(t), t0), t1) - t0) / span;
+    const H = top + tl.lanes.length * (laneH + gap) + 30;
+    let svg = '<svg viewBox="0 0 ' + W + " " + H + '" width="100%" role="img" aria-label="' + esc(title) + '">';
+    const days = span / 86400000;
+    const ticks = [];
+    if (days <= 460) { const d = new Date(t0); d.setDate(1); d.setMonth(d.getMonth() + 1); while (d.getTime() < t1) { ticks.push([d.getTime(), d.toLocaleDateString(locale(), { month: "short" })]); d.setMonth(d.getMonth() + 1); } }
+    else { const y0 = new Date(t0).getFullYear() + 1; for (let y = y0; Date.UTC(y, 0, 1) < t1; y++) ticks.push([Date.UTC(y, 0, 1), String(y)]); }
+    ticks.forEach(([t, lab]) => { const x = left + barW * (t - t0) / span; svg += '<line x1="' + x + '" y1="' + (top - 4) + '" x2="' + x + '" y2="' + (H - 26) + '" class="tl-grid"/><text x="' + x + '" y="12" class="tl-tick" text-anchor="middle">' + esc(lab) + "</text>"; });
+    tl.lanes.forEach((ln, i) => {
+      const y = top + i * (laneH + gap);
+      const name = ln.key === "periods" ? T("Sub-period", "उप-काल") : pn(ln.key);
+      svg += '<text x="' + (left - 6) + '" y="' + (y + laneH / 2 + 4) + '" class="tl-lane" text-anchor="end">' + esc(name) + "</text>";
+      ln.runs.forEach((r, k) => {
+        const x1 = X(r.start), x2 = X(r.end), w = Math.max(1, x2 - x1);
+        const cls = ln.key === "periods" ? (k % 2 ? "tl-per1" : "tl-per0") : (r.v ? "tl-yes" : "tl-no");
+        svg += '<rect x="' + x1 + '" y="' + y + '" width="' + w + '" height="' + laneH + '" rx="4" class="' + cls + '"/>';
+        const lab = ln.key === "periods" ? pn(r.label) : r.label.split(" / ").map(signName).join("/");
+        if (w > 34) svg += '<text x="' + (x1 + w / 2) + '" y="' + (y + laneH / 2 + 4) + '" class="tl-label" text-anchor="middle">' + esc(lab) + "</text>";
+      });
+    });
+    const ly = H - 14;
+    svg += '<rect x="' + left + '" y="' + (ly - 9) + '" width="12" height="12" rx="3" class="tl-yes"/><text x="' + (left + 17) + '" y="' + ly + '" class="tl-tick">' + esc(T("Supportive", "अनुकूल")) + "</text>" +
+           '<rect x="' + (left + 100) + '" y="' + (ly - 9) + '" width="12" height="12" rx="3" class="tl-no"/><text x="' + (left + 117) + '" y="' + ly + '" class="tl-tick">' + esc(T("Quiet", "शांत")) + "</text></svg>";
+    return '<figure class="tl"><figcaption>' + esc(title) + "</figcaption>" + svg + "</figure>";
+  }
+
+  // ---------- Feedback (thumbs up/down + optional comment) ----------
+  function feedbackBox(kind, ref) {
+    const box = document.createElement("div");
+    box.className = "fb-box no-print";
+    box.innerHTML = '<span class="fb-q">' + T("Was this helpful?", "क्या यह उपयोगी था?") + '</span>' +
+      '<button type="button" class="fb-btn" data-r="up" aria-label="' + T("Yes, helpful", "हाँ, उपयोगी") + '">👍</button>' +
+      '<button type="button" class="fb-btn" data-r="down" aria-label="' + T("Not helpful", "उपयोगी नहीं") + '">👎</button>' +
+      '<div class="fb-more" hidden><textarea maxlength="1000" placeholder="' + T("Tell us more (optional)", "और बताएँ (वैकल्पिक)") + '"></textarea>' +
+      '<button type="button" class="chip fb-send">' + T("Send", "भेजें") + '</button></div><p class="fine fb-msg" role="status"></p>';
+    let rating = null;
+    box.querySelectorAll(".fb-btn").forEach(b => b.addEventListener("click", () => {
+      rating = b.dataset.r;
+      box.querySelectorAll(".fb-btn").forEach(x => x.classList.toggle("on", x === b));
+      box.querySelector(".fb-more").hidden = false;
+    }));
+    box.querySelector(".fb-send").addEventListener("click", async () => {
+      const msg = box.querySelector(".fb-msg");
+      try {
+        const res = await fetch("/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind, rating, ref, comment: box.querySelector("textarea").value, language: LANG }) });
+        if (!res.ok) { const d = await res.json().catch(() => null); msg.textContent = (d && d.detail) || T("Could not send feedback right now.", "अभी प्रतिक्रिया नहीं भेजी जा सकी।"); return; }
+        box.innerHTML = '<p class="fb-thanks">' + T("Thank you! Your feedback helps us improve.", "धन्यवाद! आपकी प्रतिक्रिया हमें बेहतर बनाने में मदद करती है।") + "</p>";
+      } catch (e) { msg.textContent = T("Could not send feedback right now.", "अभी प्रतिक्रिया नहीं भेजी जा सकी।"); }
+    });
+    return box;
+  }
+
+  let asking = false;
+  async function ask(topic, question) {
+    const msg = el("askMsg");
+    if (asking) return;
+    if (!lastInp) {
+      msg.textContent = T("First enter your birth details above and tap Reveal My Cosmic Profile.", "पहले ऊपर अपना जन्म विवरण भरें और \"मेरी ब्रह्मांडीय प्रोफ़ाइल दिखाएँ\" दबाएँ।");
+      el("profile").scrollIntoView({ behavior: REDUCE ? "auto" : "smooth" });
+      return;
+    }
+    if (!topic && !question) { msg.textContent = T("Please type your question.", "कृपया अपना प्रश्न लिखें।"); el("question").focus(); return; }
+    asking = true;
+    document.querySelectorAll(".topic, #askBtn").forEach(b => { b.disabled = true; });
+    msg.classList.add("info");
+    msg.textContent = T("Consulting the classical texts. Please be patient: accurate calculation can take up to a minute...", "शास्त्रीय ग्रंथों से परामर्श हो रहा है। कृपया धैर्य रखें: सटीक गणना में एक मिनट तक लग सकता है...");
+    el("answerCard").hidden = true;
+    const i = lastInp;
+    const body = { name: i.name, birth_date: i.y + "-" + pad(i.m) + "-" + pad(i.d), birth_time: pad(i.hh) + ":" + pad(i.mm) + ":00",
+                   latitude: i.lat, longitude: i.lon, utc_offset: i.tz, topic: topic || null, question: question || "", language: LANG };
+    let data = null, problem = "";
+    try {
+      const res = await fetch("/api/reading", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      data = await res.json().catch(() => null);
+      if (!res.ok) problem = (data && typeof data.detail === "string") ? data.detail : T("Something went wrong. Please try again.", "कुछ गड़बड़ हुई। कृपया फिर से प्रयास करें।");
+    } catch (e) {
+      problem = T("The reading engine is not reachable right now. Please try again later.", "उत्तर देने वाला इंजन अभी उपलब्ध नहीं है। कृपया बाद में प्रयास करें।");
+    }
+    asking = false;
+    document.querySelectorAll(".topic, #askBtn").forEach(b => { b.disabled = false; });
+    msg.classList.remove("info");
+    if (problem || !data) { msg.textContent = problem; return; }
+    msg.classList.add("info");
+    msg.textContent = (data.remaining_today !== null && data.remaining_today !== undefined)
+      ? T("Free questions left today: " + data.remaining_today, "आज के शेष निःशुल्क प्रश्न: " + data.remaining_today) : "";
+    el("answerSources").innerHTML = (data.sources || []).map(s => '<span class="source-chip">' + esc(s) + "</span>").join("");
+    el("answerTimeline").innerHTML = timelineHTML(data.timeline, T("When Jupiter and Saturn are supportive", "गुरु और शनि कब अनुकूल हैं"));
+    el("answerBody").innerHTML = mdToHtml(data.answer || "");
+    el("answerCard").classList.toggle("care", !!data.guardrail);
+    const facts = data.facts_text;
+    el("factsBox").hidden = !facts;
+    el("factsText").textContent = facts || "";
+    const oldFb = el("answerCard").querySelector(".fb-box"); if (oldFb) oldFb.remove();
+    if (!data.guardrail) el("answerCard").appendChild(feedbackBox("answer", data.question || question || topic || ""));
+    el("answerCard").hidden = false;
+    el("answerCard").scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "start" });
+  }
+  document.querySelectorAll(".topic").forEach(b => b.addEventListener("click", () => ask(b.dataset.topic, "")));
+  el("askBtn").addEventListener("click", () => ask(null, el("question").value.trim()));
+  applyLanguage();
+
+  // ---------- 5-Year Guidance Report ----------
+  const REPORT_PRICES = { year1: 99, year5: 499 };
+  const BETA_NOTICE = true;      // set to false at the commercial launch
+  let repKind = "year1";
+  document.querySelectorAll(".product").forEach(b => b.addEventListener("click", () => {
+    repKind = b.dataset.kind;
+    document.querySelectorAll(".product").forEach(x => { x.classList.toggle("selected", x === b); x.setAttribute("aria-checked", x === b ? "true" : "false"); });
+  }));
+  STATIC.push(
+    ["#repTitle", "Guidance Reports", "मार्गदर्शन रिपोर्ट"],
+    ["[data-kind=year1] .p-name", "1-Year Monthly Guidance", "1-वर्षीय मासिक मार्गदर्शन"],
+    ["[data-kind=year1] .p-desc", "Your kundli and the next 12 months, month by month", "आपकी कुंडली और अगले 12 महीने, माह-दर-माह"],
+    ["[data-kind=year5] .p-name", "5-Year Complete Report", "5-वर्षीय संपूर्ण रिपोर्ट"],
+    ["[data-kind=year5] .p-desc", "Everything in the 1-year report, then years 2 to 5 year by year, plus family and home", "1-वर्षीय रिपोर्ट की हर चीज़, फिर वर्ष 2 से 5 वर्ष-दर-वर्ष, साथ में परिवार और घर"],
+    ["#repSub", "Your complete kundli, your dasha periods and planet transits with exact dates, and guidance on career, relationships and money from the classical texts. Every section is checked against your calculated chart, and a quiet month is called a quiet month. Save it as a PDF to keep or share.",
+                "आपकी पूरी कुंडली, दशाएँ और ग्रह गोचर सटीक तिथियों सहित, और शास्त्रीय ग्रंथों से करियर, संबंध और धन पर मार्गदर्शन। हर भाग आपकी गणना की गई कुंडली से जाँचा जाता है, और शांत महीने को शांत ही कहा जाता है। इसे PDF के रूप में सहेजें या साझा करें।"],
+    ["#repPrice", "One-time price, shown before you pay. No subscription. Free for beta testers.", "एक बार का मूल्य, भुगतान से पहले दिखाया जाता है। कोई सब्सक्रिप्शन नहीं। बीटा टेस्टर्स के लिए निःशुल्क।"],
+    ["label[for=betaCode]", "Beta invite code", "बीटा आमंत्रण कोड"],
+    ["#repBtn", "Prepare my report", "मेरी रिपोर्ट तैयार करें"]
+  );
+  const fmtD = s => { const [y, m, d] = String(s).split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString(locale(), { day: "numeric", month: "short", year: "numeric" }); };
+  const signName = s => (LANG === "hi" ? RASHI_HI[SIGNS.indexOf(s)] || s : s);
+  const nakNameS = s => { const i = Astro.NAKSHATRAS.indexOf(s); return LANG === "hi" && i >= 0 ? NAK_HI[i] : s; };
+  let repTimer = null, repJob = null;
+
+  function repSay(text, isError) { const m = el("repMsg"); m.classList.toggle("info", !isError); m.innerHTML = text; }
+  async function startReport() {
+    if (!lastInp) { repSay(T("First enter your birth details above and tap Reveal My Cosmic Profile.", "पहले ऊपर अपना जन्म विवरण भरें और \"मेरी ब्रह्मांडीय प्रोफ़ाइल दिखाएँ\" दबाएँ।"), true); el("profile").scrollIntoView(); return; }
+    const i = lastInp;
+    const body = { name: i.name, birth_date: i.y + "-" + pad(i.m) + "-" + pad(i.d), birth_time: pad(i.hh) + ":" + pad(i.mm) + ":00",
+                   latitude: i.lat, longitude: i.lon, utc_offset: i.tz, language: LANG, invite_code: el("betaCode").value.trim(), kind: repKind };
+    el("repBtn").disabled = true;
+    try {
+      const res = await fetch("/api/report", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) { repSay(esc((data && data.detail) || T("Something went wrong. Please try again.", "कुछ गड़बड़ हुई। कृपया फिर से प्रयास करें।")), true); el("repBtn").disabled = false; return; }
+      try { localStorage.setItem("c11report", data.id); localStorage.setItem("c11reportPlace", i.label); } catch (e) {}
+      pollReport(data.id);
+    } catch (e) {
+      repSay(T("The reading engine is not reachable right now. Please try again later.", "उत्तर देने वाला इंजन अभी उपलब्ध नहीं है। कृपया बाद में प्रयास करें।"), true);
+      el("repBtn").disabled = false;
+    }
+  }
+  async function pollReport(id) {
+    clearTimeout(repTimer);
+    let job = null;
+    try { const r = await fetch("/api/report/" + id); if (r.ok) job = await r.json(); else if (r.status === 404) { try { localStorage.removeItem("c11report"); } catch (e) {} el("repBtn").disabled = false; return; } } catch (e) {}
+    if (!job) { repTimer = setTimeout(() => pollReport(id), 8000); return; }
+    repJob = job;
+    el("repProgress").hidden = false;
+    el("repBar").style.width = Math.round(100 * job.progress / job.total) + "%";
+    if (job.status === "error") {
+      repSay(T("Sorry, the report could not be prepared. Please try again later.", "क्षमा करें, रिपोर्ट तैयार नहीं हो सकी। कृपया बाद में प्रयास करें।"), true);
+      el("repBtn").disabled = false; return;
+    }
+    if (job.status !== "done") {
+      const left = Math.max(1, job.total - job.progress);
+      repSay(T("Preparing your report: " + job.progress + " of " + job.total + " sections written. About " + left + " minute" + (left > 1 ? "s" : "") + " left. You can keep this page open.",
+               "आपकी रिपोर्ट तैयार हो रही है: " + job.total + " में से " + job.progress + " भाग लिखे गए। लगभग " + left + " मिनट शेष। आप यह पेज खुला रख सकते हैं।"), false);
+      repTimer = setTimeout(() => pollReport(id), 5000);
+      return;
+    }
+    el("repBtn").disabled = false;
+    repSay(T("Your report is ready. ", "आपकी रिपोर्ट तैयार है। ") + '<button type="button" class="chip" id="repOpen">' + T("Open my report", "मेरी रिपोर्ट खोलें") + "</button>", false);
+    el("repOpen").addEventListener("click", () => openReport(job));
+  }
+
+  function openReport(job) {
+    const b = job.birth, ch = job.chart, ov = job.overview;
+    let place = ""; try { place = localStorage.getItem("c11reportPlace") || ""; } catch (e) {}
+    const rows = ch.placements.map(p => "<tr><td>" + pn(p.planet) + (p.retro && p.planet !== "Rahu" && p.planet !== "Ketu" ? T(" (R)", " (व)") : "") + "</td><td>" + signName(p.sign) +
+      "</td><td>" + p.deg.toFixed(2) + "°</td><td>" + nakNameS(p.nakshatra) + " " + T("pada ", "पद ") + p.pada + "</td><td>" + p.house + "</td></tr>").join("");
+    const dashaRows = ov.mahadashas.map(md => '<tr class="md"><td colspan="2">' + pn(md.lord) + T(" main period (Mahadasha)", " मुख्य काल (महादशा)") + "</td><td>" + fmtD(md.start) + " – " + fmtD(md.end) + "</td></tr>" +
+      md.antardashas.map(ad => "<tr><td></td><td>" + pn(ad.lord) + T(" sub-period (Antardasha)", " उप-काल (अंतर्दशा)") + "</td><td>" + fmtD(ad.start) + " – " + fmtD(ad.end) + "</td></tr>" +
+        (ad.pratyantardashas || []).map(pd => '<tr class="pd"><td></td><td>\u2003' + pn(pd.lord) + T(" short phase (Pratyantardasha)", " लघु चरण (प्रत्यंतर्दशा)") + "</td><td>" + fmtD(pd.start) + " – " + fmtD(pd.end) + "</td></tr>").join("")).join("")).join("");
+    const sade = ov.sade_sati && ov.sade_sati.length
+      ? T("Sade Sati (Saturn over the 12th, 1st and 2nd sign from your Moon): ", "साढ़ेसाती (शनि आपकी चंद्र राशि से 12वें, 1ले और 2रे भाव में): ") + ov.sade_sati.map(s => fmtD(s.start) + " – " + fmtD(s.end)).join("; ")
+      : T("No Sade Sati during this report.", "इस रिपोर्ट की अवधि में साढ़ेसाती नहीं है।");
+    const five = job.kind === "year5";
+    const title = five ? T("5-Year Complete Report", "5-वर्षीय संपूर्ण रिपोर्ट") : T("1-Year Monthly Guidance", "1-वर्षीय मासिक मार्गदर्शन");
+    const verdictTxt = v => v === "supportive" ? T(" · a supportive position", " · अनुकूल स्थिति") : v === "quiet" ? T(" · a quiet position", " · शांत स्थिति") : "";
+    const keyRow = e => {
+      const d = "<td>" + fmtD(e.date) + "</td><td>";
+      if (e.kind === "sub_period") return "<tr>" + d + T("Your " + pn(e.planet) + " sub-period begins (until " + fmtD(e.until) + ")", "आपका " + pn(e.planet) + " उप-काल शुरू होता है (" + fmtD(e.until) + " तक)") + "</td></tr>";
+      if (e.kind === "ingress") return "<tr>" + d + T(pn(e.planet) + " moves into " + signName(e.sign), pn(e.planet) + " " + signName(e.sign) + " में प्रवेश करता है") + verdictTxt(e.verdict) + "</td></tr>";
+      if (e.kind === "sade_sati_start") return "<tr>" + d + T("Sade Sati begins", "साढ़ेसाती शुरू होती है") + "</td></tr>";
+      return "<tr>" + d + T("Sade Sati ends", "साढ़ेसाती समाप्त होती है") + "</td></tr>";
+    };
+    const keyDates = (job.key_dates && job.key_dates.length)
+      ? "<section><h3>" + T("Key dates in this report", "इस रिपोर्ट की मुख्य तिथियाँ") + '</h3><div class="rep-table-wrap"><table class="keydates"><tbody>' + job.key_dates.map(keyRow).join("") + "</tbody></table></div></section>" : "";
+    const glossary = '<section class="glossary"><h3>' + T("How to read this report", "इस रिपोर्ट को कैसे पढ़ें") + "</h3><p>" +
+      T("Your life moves through periods, like seasons, one after another. A <b>main period</b> (Mahadasha) lasts 6 to 20 years. Inside it runs a <b>sub-period</b> (Antardasha), and inside that a <b>short phase</b> (Pratyantardasha). Each month below says which ones are running, then explains in plain words what the classical texts suggest. When a planet is called <b>supportive</b> or <b>quiet</b>, that is how the classical transit rules of Phala Deepika rate its position: supportive is a helpful position, quiet is a neutral one. Neither means good or bad luck.",
+        "आपका जीवन ऋतुओं की तरह एक के बाद एक कालों से गुज़रता है। <b>मुख्य काल</b> (महादशा) 6 से 20 वर्ष का होता है। उसके भीतर <b>उप-काल</b> (अंतर्दशा) चलता है, और उसके भीतर <b>लघु चरण</b> (प्रत्यंतर्दशा)। नीचे हर माह बताता है कि कौन-से चल रहे हैं, फिर सरल भाषा में समझाता है कि शास्त्रीय ग्रंथ क्या संकेत देते हैं। जब किसी ग्रह को <b>अनुकूल</b> या <b>शांत</b> कहा जाता है, तो यह फलदीपिका के गोचर नियमों के अनुसार उसकी स्थिति का आकलन है: अनुकूल यानी सहायक स्थिति, शांत यानी सामान्य स्थिति। इनका अर्थ अच्छा या बुरा भाग्य नहीं है।") + "</p></section>";
+    const betaNote = BETA_NOTICE ? '<p class="rep-note">' + T("Beta version: this is an early report. If anything looks wrong or unclear, please tell us with the 👍/👎 box at the end.", "बीटा संस्करण: यह एक प्रारंभिक रिपोर्ट है। यदि कुछ गलत या अस्पष्ट लगे, तो कृपया अंत में 👍/👎 बॉक्स से बताएँ।") + "</p>" : "";
+    const runningLine = s => {
+      if (!s.running || !s.running.length) return "";
+      const one = r => pn(r.main) + " " + T("main period", "मुख्य काल") + " · " + pn(r.sub) + " " + T("sub-period", "उप-काल") + (r.short ? " · " + pn(r.short) + " " + T("short phase", "लघु चरण") : "");
+      const many = s.running.length > 1;
+      return '<p class="running"><b>' + (s.kind === "month" ? T("Running this month:", "इस माह चल रहा है:") : T("Running this year:", "इस वर्ष चल रहा है:")) + "</b> " + s.running.map(r => one(r) + (many ? " (" + fmtD(r.start) + " – " + fmtD(r.end) + ")" : "")).join(" → ") + "</p>";
+    };
+    let yearNo = 1;
+    const heading = s => s.kind === "month" ? T("Month " + s.index + ": ", "माह " + s.index + ": ") : T("Year " + (++yearNo) + ": ", "वर्ष " + yearNo + ": ");
+    const years = job.sections.map(s =>
+      '<section class="rep-year' + (s.kind === "month" ? " rep-month" : "") + '"><h3>' + heading(s) + fmtD(s.start) + " – " + fmtD(s.end) + "</h3>" + runningLine(s) +
+      '<div class="reading-body">' + mdToHtml(s.text) + "</div>" +
+      '<div class="sources-row">' + s.sources.map(x => '<span class="source-chip">' + esc(x) + "</span>").join("") + "</div>" +
+      '<details class="how"><summary>' + (s.kind === "month" ? T("Calculated facts for this month", "इस माह की गणना किए गए तथ्य") : T("Calculated facts for this year", "इस वर्ष की गणना किए गए तथ्य")) + "</summary><pre class=\"tbl\">" + esc(s.facts_text) + "</pre></details></section>").join("");
+    el("reportView").innerHTML =
+      '<div class="rep-actions no-print"><button type="button" class="chip" id="repBack">' + T("← Back", "← वापस") + '</button><button type="button" class="cta" id="repPrint">' + T("Save as PDF", "PDF के रूप में सहेजें") + "</button></div>" +
+      '<article class="rep"><header class="rep-head"><div class="rep-brand">Cosmic 11</div><h2>' + title + "</h2>" +
+      "<p><b>" + esc(b.name || T("Friend", "मित्र")) + "</b> &middot; " + fmtD(b.birth_date) + ", " + esc(b.birth_time) + (place ? " &middot; " + esc(place) : "") + "</p>" +
+      '<p class="fine">' + T("Prepared on ", "तैयार किया गया: ") + fmtD(job.created.slice(0, 10)) + T(" · Sidereal zodiac, Lahiri ayanamsa, whole-sign houses", " · निरयण राशिचक्र, लाहिड़ी अयनांश, संपूर्ण राशि भाव") + "</p></header>" + betaNote + glossary + keyDates + (job.timeline ? "<section>" + timelineHTML(job.timeline, T("When Jupiter and Saturn are supportive, and your sub-periods", "गुरु और शनि कब अनुकूल हैं, और आपके उप-काल")) + "</section>" : "") +
+      "<section><h3>" + T("Birth chart", "जन्म कुंडली") + '</h3><div class="kundli-wrap"><div id="repKundli"></div></div>' +
+      "<p>" + T("Lagna: ", "लग्न: ") + signName(ch.asc_sign) + " " + ch.asc_deg.toFixed(2) + "° (" + nakNameS(ch.asc_nak) + ") &middot; " + T("Moon sign: ", "चंद्र राशि: ") + signName(ov.moon_sign) + "</p>" +
+      '<div class="rep-table-wrap"><table><thead><tr><th>' + T("Planet", "ग्रह") + "</th><th>" + T("Sign", "राशि") + "</th><th>" + T("Degree", "अंश") + "</th><th>" + T("Nakshatra", "नक्षत्र") + "</th><th>" + T("House", "भाव") + "</th></tr></thead><tbody>" + rows + "</tbody></table></div></section>" +
+      "<section><h3>" + (five ? T("Your life periods for the next five years (dasha)", "अगले पाँच वर्षों के आपके जीवन-काल (दशा)") : T("Your life periods for the next 12 months (dasha)", "अगले 12 महीनों के आपके जीवन-काल (दशा)")) + '</h3><div class="rep-table-wrap"><table><tbody>' + dashaRows + "</tbody></table></div><p>" + sade + "</p></section>" +
+      years +
+      '<section class="rep-year"><h3>' + T("How this report was made", "यह रिपोर्ट कैसे बनी") + "</h3><p>" +
+      T("Planet positions, life periods, key dates and transits were calculated with Swiss Ephemeris, so they are exact. The explanations were written by AI in plain words from passages of the classical texts named under each section (Brihat Jataka, Brihat Samhita and Phala Deepika, all old public-domain translations, plus Cosmic 11's own nakshatra notes). An automatic check compares the wording with your calculated chart and marks what it finds wrong, but it cannot catch every mistake. Please treat the explanations as a way to reflect, not as predictions.",
+        "ग्रह स्थितियाँ, जीवन-काल, मुख्य तिथियाँ और गोचर स्विस एफेमेरिस से गणना किए गए हैं, इसलिए वे सटीक हैं। व्याख्याएँ AI ने हर भाग के नीचे बताए गए शास्त्रीय ग्रंथों (बृहत् जातक, बृहत् संहिता और फलदीपिका, सभी पुराने सार्वजनिक अनुवाद, तथा Cosmic 11 के अपने नक्षत्र नोट्स) के अंशों से सरल भाषा में लिखी हैं। एक स्वचालित जाँच शब्दों को आपकी गणना की गई कुंडली से मिलाती है और जो गलत पाती है उसे चिह्नित करती है, पर वह हर गलती नहीं पकड़ सकती। कृपया व्याख्याओं को चिंतन का साधन मानें, भविष्यवाणी नहीं।") +
+      '</p><p class="fine">' + esc(job.disclaimer || "") + "</p></section></article>";
+    renderKundli({ asc: { sign: SIGNS.indexOf(ch.asc_sign) }, planets: ch.placements.map(p => ({ name: p.planet, id: p.planet.toLowerCase(), house: p.house, retro: p.retro })) }, "repKundli");
+    el("reportView").querySelector(".rep").appendChild(feedbackBox("report", job.id));
+    document.body.classList.add("report-mode");
+    el("reportView").hidden = false;
+    window.scrollTo(0, 0);
+    el("repBack").addEventListener("click", () => { document.body.classList.remove("report-mode"); el("reportView").hidden = true; el("report").scrollIntoView(); });
+    el("repPrint").addEventListener("click", () => { document.querySelectorAll("#reportView details").forEach(d => { d.open = true; }); window.print(); });
+  }
+  el("repBtn").addEventListener("click", startReport);
+  try { const saved = localStorage.getItem("c11report"); if (saved) pollReport(saved); } catch (e) {}
+  applyLanguage();
+
+  // ---------- Deep-space hero: Kepler orbits + star field ----------
+  (function () {
+    // <PURE>
+    // Real orbits are ellipses with the Sun at one focus (Kepler's 1st law) and
+    // planets move faster near the Sun (2nd law). Eccentricities are exaggerated
+    // so the ovals are visible, and the plane is viewed at a tilt (TILT).
+    const TILT = 0.62, CX = 160, CY = 120;
+    const PLANETS = [
+      { id: "mercury", a: 33,  e: 0.28, w: 20,  T: 6,  r: 2.6, c: "#B8A08A", ph: 0.10 },
+      { id: "venus",   a: 50,  e: 0.04, w: 80,  T: 10, r: 4,   c: "#F2C98A", ph: 0.55 },
+      { id: "earth",   a: 63,  e: 0.07, w: 200, T: 16, r: 4.6, c: "#3F8FDB", ph: 0.30, moon: true },
+      { id: "mars",    a: 80,  e: 0.14, w: 310, T: 24, r: 3.4, c: "#D2452F", ph: 0.80 },
+      { id: "jupiter", a: 104, e: 0.08, w: 140, T: 34, r: 8,   c: "#E0A05A", ph: 0.05 },
+      { id: "saturn",  a: 126, e: 0.10, w: 250, T: 46, r: 6.2, c: "#E9C98B", ph: 0.45, ring: true }
+    ];
+    function solveKepler(M, e) {
+      let E = M;
+      for (let i = 0; i < 8; i++) E -= (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+      return E;
+    }
+    function orbitPoint(p, E) {
+      const x = p.a * (Math.cos(E) - p.e);
+      const y = p.a * Math.sqrt(1 - p.e * p.e) * Math.sin(E);
+      const w = p.w * Math.PI / 180;
+      const rx = x * Math.cos(w) - y * Math.sin(w);
+      const ry = x * Math.sin(w) + y * Math.cos(w);
+      return { x: CX + rx, y: CY + ry * TILT };
+    }
+    function planetPos(p, t) {
+      const M = 2 * Math.PI * (((t / p.T + p.ph) % 1 + 1) % 1);
+      return orbitPoint(p, solveKepler(M, p.e));
+    }
+    // </PURE>
+
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.querySelector(".orbit-svg");
+    const hero = document.querySelector(".hero");
+    const cv = hero && hero.querySelector(".space-canvas");
+    if (!svg || !hero || !cv) return;
+    const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mk = (name, attrs, parent) => {
+      const n = document.createElementNS(NS, name);
+      for (const k in attrs) n.setAttribute(k, attrs[k]);
+      parent.appendChild(n);
+      return n;
+    };
+
+    // ----- orbit paths + bodies -----
+    const ringsG = svg.querySelector("#orbitRings");
+    const bodiesG = svg.querySelector("#orbitBodies");
+    const sunGlow = svg.querySelector("#sunGlow");
+    PLANETS.forEach(p => {
+      let d = "";
+      for (let i = 0; i <= 120; i++) {
+        const pt = orbitPoint(p, (i / 120) * 2 * Math.PI);
+        d += (i ? "L" : "M") + pt.x.toFixed(2) + " " + pt.y.toFixed(2);
+      }
+      mk("path", { d: d + "Z", class: "orbit-ring" }, ringsG);
+    });
+    const bodies = PLANETS.map(p => {
+      const g = mk("g", {}, bodiesG);
+      mk("circle", { r: p.r, fill: p.c }, g);
+      if (p.ring) mk("ellipse", { rx: 11, ry: 3.2, fill: "none", stroke: "#D9B36C", "stroke-width": 1.2, transform: "rotate(-20)" }, g);
+      const moon = p.moon ? mk("circle", { r: 1.7, fill: "#EFE9DC" }, bodiesG) : null;
+      return { p, g, moon };
+    });
+    function updateOrbits(t) {
+      bodies.forEach(b => {
+        const pt = planetPos(b.p, t);
+        b.g.setAttribute("transform", "translate(" + pt.x.toFixed(2) + " " + pt.y.toFixed(2) + ")");
+        if (b.moon) {
+          const a = 2 * Math.PI * (t / 3.2);
+          b.moon.setAttribute("cx", (pt.x + 9 * Math.cos(a)).toFixed(2));
+          b.moon.setAttribute("cy", (pt.y + 9 * TILT * Math.sin(a)).toFixed(2));
+        }
+      });
+      sunGlow.setAttribute("opacity", (0.26 + 0.1 * Math.sin(t * 1.6)).toFixed(3));
+    }
+
+    // ----- star field (canvas) -----
+    const ctx = cv.getContext("2d");
+    const palette = ["#FFFFFF", "#FFF1D6", "#D6E4FF", "#FFD9B8"];
+    let W = 0, H = 0, stars = [], shoot = null, nextShoot = null;
+    function buildStars() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = hero.clientWidth; H = hero.clientHeight;
+      cv.width = Math.max(1, Math.round(W * dpr));
+      cv.height = Math.max(1, Math.round(H * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.min(260, Math.round(W * H / 2200));
+      stars = [];
+      for (let i = 0; i < n; i++) {
+        stars.push({
+          x: Math.random() * W, y: Math.random() * H,
+          r: 0.35 + Math.random() * 1.1, a: 0.35 + Math.random() * 0.65,
+          s: 0.6 + Math.random() * 2.2, p: Math.random() * 6.283,
+          c: palette[Math.floor(Math.random() * palette.length)], big: false
+        });
+      }
+      for (let i = 0; i < 6; i++) {
+        stars.push({
+          x: Math.random() * W, y: Math.random() * H,
+          r: 1.5 + Math.random() * 0.8, a: 0.9, s: 0.8 + Math.random(),
+          p: Math.random() * 6.283, c: "#FFF6E0", big: true
+        });
+      }
+    }
+    function drawStars(t, dt, still) {
+      ctx.clearRect(0, 0, W, H);
+      for (const s of stars) {
+        const tw = still ? 1 : 0.62 + 0.38 * Math.sin(t * s.s + s.p);
+        ctx.fillStyle = s.c;
+        if (s.big) {
+          ctx.globalAlpha = s.a * tw * 0.14;
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 5, 0, 6.283); ctx.fill();
+        }
+        ctx.globalAlpha = s.a * tw;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (still) return;
+      if (nextShoot === null) nextShoot = t + 4;
+      if (!shoot && t > nextShoot) {
+        shoot = { x: Math.random() * W * 0.75, y: Math.random() * H * 0.4, vx: W * 0.55, vy: H * 0.22, life: 0, dur: 0.85 };
+      }
+      if (shoot) {
+        shoot.life += dt;
+        const k = shoot.life / shoot.dur;
+        if (k >= 1) {
+          shoot = null; nextShoot = t + 7 + Math.random() * 9;
+        } else {
+          const hx = shoot.x + shoot.vx * k, hy = shoot.y + shoot.vy * k;
+          const tx = hx - shoot.vx * 0.16, ty = hy - shoot.vy * 0.16;
+          const g = ctx.createLinearGradient(tx, ty, hx, hy);
+          g.addColorStop(0, "rgba(255,255,255,0)");
+          g.addColorStop(1, "rgba(255,244,220," + (0.9 * (1 - k * k)).toFixed(3) + ")");
+          ctx.strokeStyle = g; ctx.lineWidth = 1.4;
+          ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(hx, hy); ctx.stroke();
+        }
+      }
+    }
+
+    // ----- run -----
+    buildStars();
+    let last = 0;
+    function frame(now) {
+      const t = now / 1000, dt = Math.min(0.1, Math.max(0, t - last));
+      last = t;
+      drawStars(t, dt, false);
+      updateOrbits(t);
+      requestAnimationFrame(frame);
+    }
+    if (reduce) { drawStars(0, 0, true); updateOrbits(12); }
+    else requestAnimationFrame(frame);
+    const onResize = () => { buildStars(); if (reduce) drawStars(0, 0, true); };
+    if (window.ResizeObserver) new ResizeObserver(onResize).observe(hero);
+    else window.addEventListener("resize", onResize);
+  })();
+</script>
+
+</body>
+</html>

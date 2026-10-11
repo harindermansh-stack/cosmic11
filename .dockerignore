@@ -1,0 +1,16 @@
+# never sent to the server
+.git
+.env
+.claude
+corpus
+corpus_v2
+chroma_db
+chroma_db_backup
+backup_*
+reports
+usage.json
+*.log
+ocr_progress.json
+__pycache__
+*.pyc
+ephe

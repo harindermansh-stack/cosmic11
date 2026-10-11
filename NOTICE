@@ -1,0 +1,8 @@
+Cosmic 11 - licensed under the GNU Affero General Public License v3.0 (see LICENSE).
+
+Third-party components:
+- Swiss Ephemeris by Astrodienst AG (AGPL-3.0). "Swiss Ephemeris Inside."
+- english_words.txt.gz: a frequency-filtered English word list derived from the word list shipped with
+  pyspellchecker by Tyler Barrus (MIT License). Used only to recognise OCR errors.
+
+Not included in this repository: the book database, the scanned books, API keys and user data.
